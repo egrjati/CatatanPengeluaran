@@ -1,4 +1,4 @@
-import CardPengeluaran from "@/components/pengeluaran/CardPengeluaran"
+import CardPengeluaran from "@/components/pengeluaran/CardPengeluaran";
 
 const dataPengeluaran = [
   {
@@ -22,22 +22,25 @@ const dataPengeluaran = [
     kategori: "Makanan",
     tanggal: "2026-09-10",
   },
+  {
+    id: 4,
+    judul: "Pentol",
+    jumlah: 5000,
+    kategori: "Camilan",
+    tanggal: "2026-09-10",
+  },
 ];
+
 function App() {
   return (
     <div className="min-h-screen bg-white p-4 space-y-4 text-xl text-black ">
-      <h1 className="text-center">Data Pengeluaran</h1>
+      <h1 className="text-center text-2xl font-bold mb-10">Data Pengeluaran</h1>
 
       {/* MAP */}
-      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center">
         {dataPengeluaran.map((keluar) => (
-          <CardPengeluaran
-            key={keluar.id}
-            judul={keluar.judul}
-            jumlah={keluar.jumlah}
-            kategori={keluar.kategori}
-            tanggal={keluar.tanggal}
-          />
+          // Spread
+          <CardPengeluaran key={keluar.id} {...keluar} />
         ))}
       </ul>
     </div>
