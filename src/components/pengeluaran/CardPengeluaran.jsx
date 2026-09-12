@@ -1,3 +1,5 @@
+import {formatRupiah} from "@/utils/format";
+
 function CardPengeluaran({judul, kategori, tanggal, jumlah}) {
     return (
       <li
@@ -14,7 +16,7 @@ function CardPengeluaran({judul, kategori, tanggal, jumlah}) {
           <p className="text-sm">{tanggal}</p>
         </div>
         <h2 className="text-lg mt-1 text-red-400 font-medium text-center">
-          Rp.{jumlah}
+          {formatRupiah.format(jumlah)}
         </h2>
       </li>
     );
