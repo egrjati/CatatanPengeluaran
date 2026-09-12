@@ -1,21 +1,64 @@
-import CardPengeluaran from "@/components/pengeluaran/CardPengeluaran";
-// import {useState} from "react";
-import {dataPengeluaran} from "@/data/data";
+import { CalendarFold } from "lucide-react";
+import FilterKategori from "@/components/pengeluaran/FilterKategori";
 
 function App() {
-  // const [pengeluaran, setPengeluaran] = useState(dataPengeluaran);
-
   return (
-    <div className="min-h-screen bg-white p-4 space-y-4 text-xl text-black ">
-      <h1 className="text-center text-2xl font-bold mb-10">Data Pengeluaran</h1>
+    <div className="min-h-screen overflow-hidden bg-white p-4">
+      <h1 className="text-black/60 text-xl font-semibold">
+        Catatan Pengeluaran
+      </h1>
 
-      {/* MAP */}
-      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center">
-        {dataPengeluaran.map((keluar) => (
-          // Spread
-          <CardPengeluaran key={keluar.id} {...keluar} />
-        ))}
-      </ul>
+      {/* Total Pengeluaran */}
+      <div className="mt-5 border border-black/30 text-black/40 rounded-md p-4 space-y-1.5">
+        <p className="uppercase text-[12px]">total pengeluaran</p>
+        <h2 className="font-angka text-3xl font-bold">RP 0</h2>
+        <p className="text-[12px]">Belum ada catatan</p>
+      </div>
+
+      {/* Inputan */}
+      <div className="mt-8 space-y-3">
+        {/* Input Name */}
+        <input
+          type="text"
+          placeholder="Contoh : Kopi Americano"
+          className="w-full border border-black/30 rounded-md p-2.5 text-[14px]"
+        />
+        {/* Kategori & Harga */}
+        <div className=" flex gap-3">
+          <input
+            type="text"
+            placeholder="Rp. 0 "
+            className="w-full border border-black/30 rounded-md p-2.5 text-[14px]"
+          />
+
+          <input
+            type="text"
+            placeholder="Makanan"
+            className="w-full border border-black/30 rounded-md p-2.5 text-[14px]"
+          />
+        </div>
+
+        {/* Date */}
+        <div className="flex gap-3 ">
+          <div className="relative flex-1">
+            <input
+              type="date"
+              className="w-full border border-black/30 rounded-md py-2.5 pl-2.5 pr-10 text-[14px] [&::-webkit-calendar-picker-indicator]:opacity-0"
+            />
+            <CalendarFold className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-black/50" />
+          </div>
+
+          <button className="py-2 px-6 rounded-md bg-[#2F7A63] text-white">
+            Tambah
+          </button>
+        </div>
+
+      {/* Filter Kategori */}
+      <FilterKategori/>
+
+      </div>
+
+
     </div>
   );
 }
