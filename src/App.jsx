@@ -1,19 +1,23 @@
 import { CalendarFold } from "lucide-react";
 import FilterKategori from "@/components/pengeluaran/FilterKategori";
+import RingkasanTotal from "@/components/pengeluaran/RingkasanTotal";
+import { dataPengeluaran } from "./data/data";
 
 function App() {
+
+  const totalPengeluaran = dataPengeluaran.reduce(
+    (total, item) => total + item.jumlah,
+    0,
+  );
+
   return (
     <div className="min-h-screen overflow-hidden bg-white p-4">
-      <h1 className="text-black/60 text-xl font-semibold">
+      <h1 className="text-black/60 text-xl font-semibold mb-5">
         Catatan Pengeluaran
       </h1>
 
       {/* Total Pengeluaran */}
-      <div className="mt-5 border border-black/30 text-black/40 rounded-md p-4 space-y-1.5">
-        <p className="uppercase text-[12px]">total pengeluaran</p>
-        <h2 className="font-angka text-3xl font-bold">RP 0</h2>
-        <p className="text-[12px]">Belum ada catatan</p>
-      </div>
+      <RingkasanTotal hasil={totalPengeluaran}/>
 
       {/* Inputan */}
       <div className="mt-8 space-y-3">
