@@ -27,4 +27,11 @@ export const dataPengeluaran = [
     kategori: "Camilan",
     tanggal: "2026-09-10",
   },
+  {
+    id: 5,
+    judul: "Rokok",
+    jumlah: 25000,
+    kategori: "Lainnya",
+    tanggal: "2026-09-10",
+  },
 ];
