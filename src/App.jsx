@@ -2,9 +2,9 @@ import { CalendarFold } from "lucide-react";
 import FilterKategori from "@/components/pengeluaran/FilterKategori";
 import RingkasanTotal from "@/components/pengeluaran/RingkasanTotal";
 import { dataPengeluaran } from "./data/data";
+import {daftarKategori} from "@/data/kategori";
 
 function App() {
-
   const totalPengeluaran = dataPengeluaran.reduce(
     (total, item) => total + item.jumlah,
     0,
@@ -17,29 +17,33 @@ function App() {
       </h1>
 
       {/* Total Pengeluaran */}
-      <RingkasanTotal hasil={totalPengeluaran}/>
+      <RingkasanTotal hasil={totalPengeluaran} />
 
       {/* Inputan */}
-      <div className="mt-8 space-y-3">
+      <form className="mt-8 space-y-3">
         {/* Input Name */}
         <input
           type="text"
           placeholder="Contoh : Kopi Americano"
-          className="w-full border border-black/30 rounded-md p-2.5 text-[14px]"
+          className="w-full border border-black/30 rounded-md p-2.5 text-[14px] mt-1"
         />
+
         {/* Kategori & Harga */}
-        <div className=" flex gap-3">
+        <div className="flex gap-3">
+          {/* Harga */}
           <input
-            type="text"
-            placeholder="Rp. 0 "
-            className="w-full border border-black/30 rounded-md p-2.5 text-[14px]"
+            type="number"
+            placeholder="Rp. 0"
+            className="w-full border border-black/30 rounded-md mt-1 p-2.5 text-[14px]"
           />
 
-          <input
-            type="text"
-            placeholder="Makanan"
-            className="w-full border border-black/30 rounded-md p-2.5 text-[14px]"
-          />
+          {/* Kategori */}
+          <select className="w-full border border-black/30 rounded-md p-2.5 text-[14px] mt-1">
+          {daftarKategori.map((kategori) => (
+          <option key={kategori} value={kategori}>{kategori}</option>
+          ))}
+
+          </select>
         </div>
 
         {/* Date */}
@@ -56,13 +60,9 @@ function App() {
             Tambah
           </button>
         </div>
-
+      </form>
       {/* Filter Kategori */}
-      <FilterKategori/>
-
-      </div>
-
-
+      <FilterKategori />
     </div>
   );
 }
