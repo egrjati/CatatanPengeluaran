@@ -1,8 +1,7 @@
 import FilterKategori from "@/components/pengeluaran/FilterKategori";
 import RingkasanTotal from "@/components/pengeluaran/RingkasanTotal";
-import FromPengeluaran from "@/components/pengeluaran/FromPengeluaran";
-import { dataPengeluaran } from "./data/data";
-import {daftarKategori} from "@/data/kategori";
+import FormPengeluaran from "@/components/pengeluaran/FromPengeluaran";
+import { dataPengeluaran } from "@/data/data";
 
 function App() {
   const totalPengeluaran = dataPengeluaran.reduce(
@@ -20,10 +19,11 @@ function App() {
       <RingkasanTotal hasil={totalPengeluaran} />
 
       {/* Inputan */}
-      <FromPengeluaran daftar={daftarKategori}/>
+      <FormPengeluaran/>
 
       {/* Filter Kategori */}
       <FilterKategori />
+
     </div>
   );
 }

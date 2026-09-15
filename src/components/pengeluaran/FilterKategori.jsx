@@ -7,12 +7,12 @@ function FilterKategori() {
       <button className="py-1 px-3 border border-black/30 text-white bg-black/90 font-medium rounded-xl text-xs">
         Semua
       </button>
-      {daftarKategori.map((kategori) => (
+      {daftarKategori.map((filter) => (
         <button
-          key={kategori}
+          key={filter}
           className="py-1 px-3 border border-black/30 text-black/40 font-medium rounded-xl text-xs"
         >
-          {kategori}
+          {filter}
         </button>
       ))}
     </div>
