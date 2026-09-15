@@ -3,6 +3,5 @@ export const daftarKategori = [
     "Minuman",
     "Transport",
     "Camilan",
-    "Barang",
     "Lainnya"
 ];
