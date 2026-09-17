@@ -1,10 +1,20 @@
+import {useState} from "react";
 import FilterKategori from "@/components/pengeluaran/FilterKategori";
 import RingkasanTotal from "@/components/pengeluaran/RingkasanTotal";
 import FormPengeluaran from "@/components/pengeluaran/FromPengeluaran";
 import { dataPengeluaran } from "@/data/data";
 
+
 function App() {
-  const totalPengeluaran = dataPengeluaran.reduce(
+  const [pengeluaran, setPengeluaran] = useState(dataPengeluaran);
+
+  function tambahPengeluaran(itemBaru) {
+    // spredOpration | bongkar array dan tambahkan yang baru : 1,2,3,itemBaru
+    setPengeluaran([...pengeluaran, itemBaru]);
+  }
+
+  // pengeluaran dari useState
+  const totalPengeluaran = pengeluaran.reduce(
     (total, item) => total + item.jumlah,
     0,
   );
@@ -19,7 +29,7 @@ function App() {
       <RingkasanTotal hasil={totalPengeluaran} />
 
       {/* Inputan */}
-      <FormPengeluaran/>
+      <FormPengeluaran onTambah={tambahPengeluaran}/>
 
       {/* Filter Kategori */}
       <FilterKategori />
