@@ -2,6 +2,7 @@ import {useState} from "react";
 import FilterKategori from "@/components/pengeluaran/FilterKategori";
 import RingkasanTotal from "@/components/pengeluaran/RingkasanTotal";
 import FormPengeluaran from "@/components/pengeluaran/FromPengeluaran";
+import TableBoard from "@/components/pengeluaran/TableBoard";
 import { dataPengeluaran } from "@/data/data";
 
 
@@ -33,6 +34,9 @@ function App() {
 
       {/* Filter Kategori */}
       <FilterKategori />
+
+      {/* Table */}
+      <TableBoard/>
 
     </div>
   );
