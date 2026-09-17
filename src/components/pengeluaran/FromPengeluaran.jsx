@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CalendarFold } from "lucide-react";
 import { daftarKategori } from "@/data/kategori";
 
-function FormPengeluaran() {
+function FormPengeluaran({onTambah}) {
   const [nama, setNama] = useState("");
   const [harga, setHarga] = useState("");
   const [kategori, setKategori] = useState(daftarKategori[0]);
@@ -17,7 +17,7 @@ function FormPengeluaran() {
       kategori: kategori,
       tanggal: tanggal,
     };
-    console.log(itemBaru);
+    onTambah(itemBaru);
   }
 
   return (
