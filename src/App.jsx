@@ -31,6 +31,7 @@ function App() {
 
       {/* Inputan */}
       <FormPengeluaran onTambah={tambahPengeluaran}/>
+      
 
       {/* Filter Kategori */}
       <FilterKategori  />
