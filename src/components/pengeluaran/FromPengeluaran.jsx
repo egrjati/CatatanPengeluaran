@@ -18,6 +18,13 @@ function FormPengeluaran({onTambah}) {
       tanggal: tanggal,
     };
     onTambah(itemBaru);
+
+    // Balikin Input ke 0
+    setNama("");
+    setHarga("");
+    setKategori(daftarKategori[0]);
+    setTanggal("");
+
   }
 
   return (

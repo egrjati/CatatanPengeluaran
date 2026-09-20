@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="min-h-screen overflow-hidden bg-white p-4">
       <h1 className="text-black/60 text-xl font-semibold mb-5">
-        Catatan Pengeluaran
+       Catatan Pengeluaran 
       </h1>
 
       {/* Total Pengeluaran */}
@@ -33,7 +33,7 @@ function App() {
       <FormPengeluaran onTambah={tambahPengeluaran}/>
 
       {/* Filter Kategori */}
-      <FilterKategori />
+      <FilterKategori  />
 
       {/* Table */}
       <TableBoard datas={pengeluaran}/>
