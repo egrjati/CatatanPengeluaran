@@ -1,4 +1,3 @@
-import dcm from "@/assets/icon/dcm.png";
 
 function TableBoard({ datas }) {
   // Early return
@@ -6,7 +5,7 @@ function TableBoard({ datas }) {
     return (
       <div className="w-full py-24 mt-5 rounded-md bg-white border border-black/30 flex flex-col gap-2 justify-center items-center tracking-wide">
         <img
-          src={dcm}
+          src=""
           alt="Logo Catatan"
           className="w-16 h-16 lg:w-22 lg:h-22 opacity-55"
         />
