@@ -5,14 +5,53 @@ import { Eye, EyeOff } from "lucide-react";
 import iconGoogle from "@/assets/icon/google.svg";
 
 function Register() {
-  const [pw, setPw] = useState("");
+  const [daftarEmail, setDaftarEmail] = useState("")
+  const [sandi, setSandi] = useState("");
+  const [name, setName] =useState("");
+  const [err, setErr] = useState({});
   const [showPass, setPass] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newErr = {};
+
+    // Name
+    if (name.trim() === "") {
+      newErr.name = "Nama wajib diisi";
+    } else if (!/^[A-Za-z\s]+$/.test(name)) {
+      newErr.name = "Nama tidak valid";
+    }
+
+
+      // Email
+      if (daftarEmail.trim() === "") {
+        newErr.daftarEmail = "Email wajib diisi";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(daftarEmail.trim())) {
+        newErr.daftarEmail = "Format tidak valid";
+      }
+
+    // Pw
+    if (sandi.trim() === "") {
+      newErr.sandi = "Password wajib diisi";
+    } else if (sandi.length < 8 ) {
+      newErr.sandi = "Minimal 8 karakter";
+    } 
+
+
+    setErr(newErr);
+    if (Object.keys(newErr).length > 0) return;
+  }
 
   return (
     <div className="bg-black/10 min-h-dvh flex justify-center items-center px-4 py-10 [@media(max-height:720px)]:py-4">
       <section className="w-full max-w-md py-7 [@media(max-height:720px)]:py-5 px-8 flex flex-col bg-white rounded-xl shadow-sm">
         {/* Logo */}
-        <img src={Logo} alt="Logo Notebook" className="w-10 mb-3 mx-auto [@media(max-height:720px)]:w-8 [@media(max-height:720px)]:mb-2" />
+        <img
+          src={Logo}
+          alt="Logo Notebook"
+          className="w-10 mb-3 mx-auto [@media(max-height:720px)]:w-8 [@media(max-height:720px)]:mb-2"
+        />
         {/* title */}
         <div className="text-center">
           <h1 className="font-bold text-black/90 text-xl">Buat Akun Baru</h1>
@@ -22,7 +61,10 @@ function Register() {
         </div>
 
         {/* From */}
-        <form className="w-full mt-5 flex flex-col gap-3 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:gap-2.5">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full mt-5 flex flex-col gap-3 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:gap-2.5"
+        >
           {/* Nama Lengkap */}
           <div>
             <label
@@ -34,10 +76,19 @@ function Register() {
 
             <input
               id="name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                setErr({err, name: "" });
+              }}
               type="text"
               placeholder="Wahyu Enggar Jati"
-              className="w-full px-3.5 py-2 bg-white border border-black/20 rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62]"
+              className={`w-full px-3.5 py-2 bg-white border rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62] ${err.name ? "border-red-500" : "border-black/20"}`}
             />
+
+            {err.name && (
+              <p className="text-red-500 text-xs">{err.name}</p>
+            )}
           </div>
 
           {/* Email */}
@@ -51,10 +102,20 @@ function Register() {
 
             <input
               id="email"
+              value={daftarEmail}
+              onChange={(e) => {
+                setDaftarEmail(e.target.value);
+                setErr({...err, daftarEmail: ""})
+              }}
               type="email"
               placeholder="nama@example.com"
-              className="w-full px-3.5 py-2 bg-white border border-black/20 rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62]"
+              className={`w-full px-3.5 py-2 bg-white border rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62] ${err.sandi ? "border-red-500" : "border-black/20"}`}
             />
+            {err.daftarEmail && (
+              <p className="text-red-500 text-xs font-medium">
+                {err.daftarEmail}
+              </p>
+            )}
           </div>
 
           {/* Password */}
@@ -69,13 +130,15 @@ function Register() {
               <input
                 id="password"
                 type={showPass ? "text" : "password"}
-                value={pw}
+                value={sandi}
                 onChange={(e) => {
-                  setPw(e.target.value);
+                  setSandi(e.target.value);
+                  setErr({ ...err, sandi: "" });
                 }}
                 placeholder="Minimal 8 karakter"
-                className="w-full pl-3.5 pr-12 py-2 bg-white border border-black/20 rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62]"
+                className={`w-full pl-3.5 pr-12 py-2 bg-white border rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62] ${err.sandi ? "border-red-500" : "border-black/20"}`}
               />
+
               <button
                 type="button"
                 onClick={() => setPass((prev) => !prev)}
@@ -90,6 +153,10 @@ function Register() {
                   <Eye className="w-4.5" />
                 )}
               </button>
+
+              {err.sandi && (
+                <p className="text-red-500 text-xs font-medium">{err.sandi}</p>
+              )}
             </div>
           </div>
 
@@ -141,7 +208,7 @@ function Register() {
         </button>
 
         {/* masuk */}
-        <p className="text-center text-sm text-black/50 mt-5">
+        <p className="text-center flex gap-1 text-sm text-black/50 mt-5">
           Sudah punya akun?{" "}
           <Link to="/" className="font-semibold text-[#2E7A62]">
             Masuk
