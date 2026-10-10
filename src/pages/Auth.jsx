@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import Logo from "@/assets/icon/notebook-mark.svg";
 import iconGoogle from "@/assets/icon/google.svg"; 
 import { Eye, EyeOff } from "lucide-react";
@@ -34,8 +35,8 @@ function Auth() {
   };
 
   return (
-    <div className="bg-black/10 h-screen overflow-hidden flex justify-center items-center px-4">
-      <section className="w-full max-w-lg py-8 px-10 flex flex-col bg-white rounded-xl">
+    <div className="bg-black/10 min-h-dvh flex justify-center items-center px-4 py-10 [@media(max-height:720px)]:py-4">
+      <section className="w-full max-w-md py-7 [@media(max-height:720px)]:py-5 px-8 flex flex-col bg-white rounded-xl shadow-sm">
         <img src={Logo} alt="Logo Notebook" className="w-12 mb-4 mx-auto" />
         {/* title */}
         <div className="text-center">
@@ -74,9 +75,7 @@ function Auth() {
               className={`w-full px-4 py-2.5 bg-white border rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62] ${error.email ? "border-red-500" : "border-black/30"}`}
             />
             {error.email && (
-              <p className="text-red-400 text-xs font-medium">
-                {error.email}
-              </p>
+              <p className="text-red-400 text-xs font-medium">{error.email}</p>
             )}
           </div>
 
@@ -122,9 +121,7 @@ function Auth() {
             </div>
 
             {error.pw && (
-              <p className="text-red-500 text-xs font-medium">
-                {error.pw}
-              </p>
+              <p className="text-red-500 text-xs font-medium">{error.pw}</p>
             )}
           </div>
 
@@ -163,15 +160,16 @@ function Auth() {
           type="button"
           className="w-full flex items-center justify-center gap-4 py-2.5 bg-white border border-black/10 rounded-2xl text-sm font-medium text-black/80"
         >
-        <img src={iconGoogle} alt="Login With Google" className="w-6" />  Masuk dengan Google
+          <img src={iconGoogle} alt="Login With Google" className="w-6" /> Masuk
+          dengan Google
         </button>
 
         {/* daftar */}
         <p className="text-center text-sm text-black/50 mt-6">
           Belum punya akun?{" "}
-          <a href="#" className="font-semibold text-[#2E7A62]">
-            Daftar
-          </a>
+            <Link to="/register" className="font-semibold text-[#2E7A62]">
+              Daftar
+            </Link>
         </p>
       </section>
     </div>
