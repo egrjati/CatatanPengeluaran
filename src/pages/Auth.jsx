@@ -142,7 +142,7 @@ function Auth() {
           {/* tombol masuk */}
           <button
             type="submit"
-            className="w-full mt-2 py-2.5 bg-[#2E7A62] rounded-lg text-sm font-semibold text-white"
+            className="w-full cursor-pointer mt-2 py-2.5 bg-[#2E7A62] rounded-lg text-sm font-semibold text-white"
           >
             Masuk
           </button>
@@ -158,7 +158,7 @@ function Auth() {
         {/* google */}
         <button
           type="button"
-          className="w-full flex items-center justify-center gap-4 py-2.5 bg-white border border-black/10 rounded-2xl text-sm font-medium text-black/80"
+          className="w-full cursor-pointer flex items-center justify-center gap-4 py-2.5 bg-white border border-black/10 rounded-2xl text-sm font-medium text-black/80"
         >
           <img src={iconGoogle} alt="Login With Google" className="w-6" /> Masuk
           dengan Google
@@ -167,9 +167,9 @@ function Auth() {
         {/* daftar */}
         <p className="text-center text-sm text-black/50 mt-6">
           Belum punya akun?{" "}
-            <Link to="/register" className="font-semibold text-[#2E7A62]">
-              Daftar
-            </Link>
+          <Link to="/register" className="font-semibold text-[#2E7A62]">
+            Daftar
+          </Link>
         </p>
       </section>
     </div>
