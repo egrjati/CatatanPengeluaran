@@ -62,6 +62,7 @@ function Register() {
 
         {/* From */}
         <form
+        noValidate
           onSubmit={handleSubmit}
           className="w-full mt-5 flex flex-col gap-3 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:gap-2.5"
         >
@@ -79,16 +80,14 @@ function Register() {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
-                setErr({err, name: "" });
+                setErr({ ...err, name: "" });
               }}
               type="text"
               placeholder="Wahyu Enggar Jati"
               className={`w-full px-3.5 py-2 bg-white border rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62] ${err.name ? "border-red-500" : "border-black/20"}`}
             />
 
-            {err.name && (
-              <p className="text-red-500 text-xs">{err.name}</p>
-            )}
+            {err.name && <p className="text-red-500 text-xs">{err.name}</p>}
           </div>
 
           {/* Email */}
@@ -105,11 +104,11 @@ function Register() {
               value={daftarEmail}
               onChange={(e) => {
                 setDaftarEmail(e.target.value);
-                setErr({...err, daftarEmail: ""})
+                setErr({ ...err, daftarEmail: "" });
               }}
               type="email"
               placeholder="nama@example.com"
-              className={`w-full px-3.5 py-2 bg-white border rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62] ${err.sandi ? "border-red-500" : "border-black/20"}`}
+              className={`w-full px-3.5 py-2 bg-white border rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62] ${err.daftarEmail ? "border-red-500" : "border-black/20"}`}
             />
             {err.daftarEmail && (
               <p className="text-red-500 text-xs font-medium">
@@ -154,10 +153,10 @@ function Register() {
                 )}
               </button>
 
+            </div>
               {err.sandi && (
                 <p className="text-red-500 text-xs font-medium">{err.sandi}</p>
               )}
-            </div>
           </div>
 
           {/* Setuju */}
@@ -185,7 +184,7 @@ function Register() {
           {/* Daftar */}
           <button
             type="submit"
-            className="w-full mt-1 py-2.5 bg-[#2E7A62] rounded-lg text-sm font-semibold text-white"
+            className="w-full mt-1 py-2.5 bg-[#2E7A62] rounded-lg text-sm font-semibold text-white cursor-pointer"
           >
             Daftar
           </button>
@@ -201,14 +200,14 @@ function Register() {
         {/* google */}
         <button
           type="button"
-          className="w-full flex items-center justify-center gap-3 py-2.5 bg-white border border-black/15 rounded-lg text-sm font-medium text-black/80"
+          className="w-full cursor-pointer flex items-center justify-center gap-3 py-2.5 bg-white border border-black/15 rounded-lg text-sm font-medium text-black/80"
         >
           <img src={iconGoogle} alt="" className="w-5" />
           Daftar dengan Google
         </button>
 
         {/* masuk */}
-        <p className="text-center flex gap-1 text-sm text-black/50 mt-5">
+        <p className="text-center text-sm text-black/50 mt-6">
           Sudah punya akun?{" "}
           <Link to="/" className="font-semibold text-[#2E7A62]">
             Masuk
