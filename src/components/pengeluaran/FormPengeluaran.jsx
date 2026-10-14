@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CalendarFold, TriangleAlert } from "lucide-react";
+import { ArrowUpRight, CalendarFold, TriangleAlert } from "lucide-react";
 import { daftarKategori } from "@/data/kategori";
 
 function FormPengeluaran({ onTambah }) {
@@ -16,7 +16,7 @@ function FormPengeluaran({ onTambah }) {
     const hargaAngka = Number(harga); //ubah [harga] jadi number di hargaAngka
 
     if (nama.trim() === "") {
-      setError({ nama: "Nama tidak boleh kosong" });
+      setError({ nama: "Nama Barang wajib diisi" });
       return;
     }
     if (Number.isNaN(hargaAngka) || hargaAngka <= 0) {
@@ -45,41 +45,86 @@ function FormPengeluaran({ onTambah }) {
     setError({});
   }
 
-  // Dipakai semua input, biar class-nya gak ditulis berulang
-  const kelasInput = "w-full border rounded-md text-[14px]";
-  const kelasBorder = (adaError) =>
-    adaError ? "border-red-500" : "border-black/30";
-
   // Validasi pakai early return
   const pesanError = Object.values(error)[0];
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-3">
+    <form
+      onSubmit={handleSubmit}
+      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#D62828] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
+    >
+      {/* stiker miring di pojok */}
+      <span className="absolute -top-4 left-5 -rotate-3 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-neutral-900 shadow-[2px_2px_0_#171717]">
+        ✍️ Jajan apa hari ini?
+      </span>
+
+      {/* judul form */}
+      <h2 className="text-2xl font-extrabold text-[#F2ECE4]">Catat Pengeluaran</h2>
+      <p className="mt-1 font-angka text-xs text-[#F2ECE4]/70">
+        biar dompet gak kaget di akhir bulan 💸
+      </p>
+
       {/* Input Nama */}
-      <input
-        type="text"
-        value={nama}
-        placeholder="Contoh : Kopi Americano"
-        onChange={(e) => setNama(e.target.value)}
-        className={`${kelasInput} ${kelasBorder(error.nama)} p-2.5`}
-      />
-
-      {/* Kategori & Harga */}
-      <div className="flex gap-3">
-        {/* Harga */}
+      <label className="mt-6 block">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
+          Beli apa?
+        </span>
         <input
-          type="number"
-          value={harga}
-          placeholder="Rp. 0"
-          onChange={(e) => setHarga(e.target.value)}
-          className={`${kelasInput} ${kelasBorder(error.harga)} flex-1 min-w-0 p-2.5`}
+          type="text"
+          value={nama}
+          placeholder="Contoh : Kopi Americano"
+          onChange={(e) => setNama(e.target.value)}
+          className={`mt-1.5 w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:font-normal placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.nama ? "ring-4 ring-[#FFE14D]" : ""}`}
         />
+      </label>
 
-        {/* Kategori */}
+      {/* Harga & Tanggal */}
+      <div className="mt-5 grid grid-cols-2 gap-4">
+        {/* Harga */}
+        <label className="block">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
+            Harga
+          </span>
+          <div className="relative mt-1.5">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 font-angka text-sm font-bold text-neutral-500">
+              Rp
+            </span>
+            <input
+              type="number"
+              value={harga}
+              placeholder="0"
+              onChange={(e) => setHarga(e.target.value)}
+              className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-11 pr-4 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.harga ? "ring-4 ring-[#FFE14D]" : ""}`}
+            />
+          </div>
+        </label>
+
+        {/* Tanggal */}
+        <label className="block min-w-0">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
+            Kapan?
+          </span>
+          <div className="relative mt-1.5">
+            <input
+              type="date"
+              value={tanggal}
+              onChange={(e) => setTanggal(e.target.value)}
+              className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-4 pr-10 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] [&::-webkit-calendar-picker-indicator]:opacity-0 ${error.tanggal ? "ring-4 ring-[#FFE14D]" : ""}`}
+            />
+            <CalendarFold className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-900" />
+          </div>
+        </label>
+      </div>
+
+      {/* Kategori */}
+      <label className="mt-5 block">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
+          Kategori
+        </span>
         <select
           value={kategori}
-          className={`${kelasInput} border-black/30 flex-1 min-w-0 p-2.5`}
           onChange={(e) => setKategori(e.target.value)}
+          className="mt-1.5 w-full cursor-pointer rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717]"
         >
           {daftarKategori.map((k) => (
             <option key={k} value={k}>
@@ -87,30 +132,21 @@ function FormPengeluaran({ onTambah }) {
             </option>
           ))}
         </select>
-      </div>
+      </label>
 
-      {/* Date */}
-      <div className="flex gap-3">
-        <div className="relative flex-1 min-w-0">
-          <input
-            value={tanggal}
-            type="date"
-            onChange={(e) => setTanggal(e.target.value)}
-            className={`${kelasInput} ${kelasBorder(error.tanggal)} py-2.5 pl-2.5 pr-10 [&::-webkit-calendar-picker-indicator]:opacity-0`}
-          />
-          <CalendarFold className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-black/50" />
-        </div>
-
-        {/* Button tambah */}
-        <button className="shrink-0 border border-transparent py-2.5 px-6 rounded-md bg-[#2F7A63] text-white text-[14px]">
-          Tambah
-        </button>
-      </div>
+      {/* Button tambah */}
+      <button
+        type="submit"
+        className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-neutral-900 bg-[#FFE14D] py-3.5 text-base font-extrabold uppercase tracking-wide text-neutral-900 shadow-[4px_4px_0_#171717] transition hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-none"
+      >
+        Gas, Catat!
+        <ArrowUpRight className="h-5 w-5" strokeWidth={3} />
+      </button>
 
       {/* Satu tempat tetap untuk pesan error */}
       {pesanError && (
-        <p className="flex items-center gap-1.5 text-xs text-red-600">
-          <TriangleAlert className="h-3.5 w-3.5 shrink-0" />
+        <p className="mt-4 flex items-center gap-2 rounded-xl border-2 border-neutral-900 bg-[#FFE14D] px-4 py-2.5 text-xs font-bold text-neutral-900">
+          <TriangleAlert className="h-4 w-4 shrink-0" />
           {pesanError}
         </p>
       )}

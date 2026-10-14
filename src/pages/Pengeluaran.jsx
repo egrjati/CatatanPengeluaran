@@ -1,6 +1,6 @@
 import { useState } from "react";
 import FilterKategori from "@/components/pengeluaran/FilterKategori";
-import RingkasanTotal from "@/components/pengeluaran/RingkasanTotal";
+// import RingkasanTotal from "@/components/pengeluaran/RingkasanTotal";
 import FormPengeluaran from "@/components/pengeluaran/FormPengeluaran";
 import TableBoard from "@/components/pengeluaran/TableBoard";
 import { dataPengeluaran } from "@/data/data";
@@ -14,10 +14,10 @@ function Pengeluaran() {
   }
 
   // pengeluaran dari useState
-  const totalPengeluaran = pengeluaran.reduce(
-    (total, item) => total + item.jumlah,
-    0,
-  );
+  // const totalPengeluaran = pengeluaran.reduce(
+  //   (total, item) => total + item.jumlah,
+  //   0,
+  // );
 
   return (
     <div className="min-h-screen overflow-hidden bg-white p-4">
@@ -26,7 +26,7 @@ function Pengeluaran() {
       </h1>
 
       {/* Total Pengeluaran */}
-      <RingkasanTotal hasil={totalPengeluaran} />
+      {/* <RingkasanTotal hasil={totalPengeluaran} /> */}
 
       {/* Inputan */}
       <FormPengeluaran onTambah={tambahPengeluaran} />

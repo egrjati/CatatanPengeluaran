@@ -1,3 +1,4 @@
+import { formatRupiah } from "@/utils/format";
 
 function TableBoard({ datas }) {
   // Early return
@@ -32,47 +33,62 @@ function TableBoard({ datas }) {
     b[0].localeCompare(a[0]),
   );
 
-  console.log(tanggalUrut);
+  // total semua pengeluaran untuk baris TOTAL di bawah struk
+  const total = datas.reduce((jumlah, item) => jumlah + item.jumlah, 0);
 
   return (
-    <div className="mt-4 w-full px-6 py-10 rounded-md bg-white border border-black/30 flex flex-col ">
+    <div className="mt-4 w-full rounded-sm bg-[#F2ECE4] px-6 py-10 font-angka text-neutral-900 shadow-md">
+      {/* header struk */}
+      <div className="flex items-center justify-between">
+        <p className="font-sans text-sm font-bold uppercase tracking-widest text-[#D62828]">
+          Receipt
+        </p>
+        <p className="text-sm font-semibold">
+          No. {String(datas.length).padStart(6, "0")}
+        </p>
+      </div>
+
       {tanggalUrut.map(([tanggal, items]) => {
         // subtotal per tanggal
         const subtotal = items.reduce((total, item) => total + item.jumlah, 0);
 
         return (
-        <section key={tanggal}>
-          <div className="mb-16">
-            {/* tgl & total harga */}
-            <div className="flex justify-between font-semibold text-black/40 text-xs">
-              <p>{tanggal}</p>
-              <p className="font-angka">{subtotal}</p>
-            </div>
-            <hr className="border-black/10 mt-2" />
+          <section key={tanggal} className="mt-6">
+            {/* tanggal diapit garis putus-putus */}
+            <p className="border-y-2 border-dashed border-neutral-900 py-2 text-center text-sm font-semibold tracking-wider">
+              DATE: {tanggal.split("-").reverse().join("/")}
+            </p>
+
             {/* map dalam */}
             {items.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between mt-4"
-              >
-                <div className="flex items-center gap-2">
-                  <h2 className="font-semibold text-base lg:text-xl text-black/90">
-                    {item.judul}
-                  </h2>
-                  <p className="text-xs font-medium bg-black/5 text-black/60 px-2 py-0.5 border border-black/30 rounded-2xl">
-                    {item.kategori}
-                  </p>
+              <div key={item.id} className="mt-4 text-sm">
+                <p>{item.judul}</p>
+                <div className="flex items-end gap-2">
+                  <p className="text-xs text-neutral-500">{item.kategori}</p>
+                  {/* garis titik-titik penghubung ke harga */}
+                  <span className="mb-1 flex-1 border-b-2 border-dotted border-neutral-400" />
+                  <p>{formatRupiah.format(item.jumlah)}</p>
                 </div>
-                <p className="font-angka text-base font-light">
-                  {" "}
-                  Rp {item.jumlah}
-                </p>
               </div>
             ))}
-          </div>
-        </section>
+
+            <div className="mt-4 flex justify-between text-xs text-neutral-500">
+              <p>Subtotal</p>
+              <p>{formatRupiah.format(subtotal)}</p>
+            </div>
+          </section>
         );
       })}
+
+      {/* total keseluruhan */}
+      <div className="mt-6 flex items-center justify-between border-t-2 border-dashed border-neutral-900 pt-4 font-bold">
+        <p className="text-lg">TOTAL:</p>
+        <p className="text-xl">{formatRupiah.format(total)}</p>
+      </div>
+
+      <p className="mt-8 text-center font-sans text-3xl font-extrabold italic text-[#D62828]">
+        Terima Kasih!
+      </p>
     </div>
   );
 }
