@@ -20,22 +20,25 @@ function Pengeluaran() {
   // );
 
   return (
-    <div className="min-h-screen overflow-hidden bg-white p-4">
-      <h1 className="text-black/60 text-xl font-semibold mb-5">
-        Catatan Pengeluaran
-      </h1>
-
+    <div className="mx-auto flex flex-col lg:flex lg:flex-row lg:items-start justify-center gap-4 lg:gap-12 p-4">
       {/* Total Pengeluaran */}
       {/* <RingkasanTotal hasil={totalPengeluaran} /> */}
 
       {/* Inputan */}
-      <FormPengeluaran onTambah={tambahPengeluaran} />
+      <div className="lg:sticky lg:top-4">
+        <FormPengeluaran onTambah={tambahPengeluaran} />
+      </div>
 
-      {/* Filter Kategori */}
-      <FilterKategori />
+      {/* Kanan */}
+      <div className="min-w-0">
+        {/* Filter Kategori */}
+        <div className="lg:sticky lg:top-4 z-10 bg-white px-1 pt-1 pb-1 before:absolute before:inset-x-0 before:-top-4 before:h-4 before:bg-white">
+          <FilterKategori />
+        </div>
 
-      {/* Table */}
-      <TableBoard datas={pengeluaran} />
+        {/* Table */}
+        <TableBoard datas={pengeluaran} />
+      </div>
     </div>
   );
 }

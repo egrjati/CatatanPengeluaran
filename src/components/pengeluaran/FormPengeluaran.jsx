@@ -59,7 +59,9 @@ function FormPengeluaran({ onTambah }) {
       </span>
 
       {/* judul form */}
-      <h2 className="text-2xl font-extrabold text-[#F2ECE4]">Catat Pengeluaran</h2>
+      <h2 className="text-2xl font-extrabold text-[#F2ECE4]">
+        Catat Pengeluaran
+      </h2>
       <p className="mt-1 font-angka text-xs text-[#F2ECE4]/70">
         biar dompet gak kaget di akhir bulan 💸
       </p>

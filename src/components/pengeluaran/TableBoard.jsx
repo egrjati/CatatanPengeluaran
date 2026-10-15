@@ -37,7 +37,7 @@ function TableBoard({ datas }) {
   const total = datas.reduce((jumlah, item) => jumlah + item.jumlah, 0);
 
   return (
-    <div className="mt-4 w-full rounded-sm bg-[#F2ECE4] px-6 py-10 font-angka text-neutral-900 shadow-md">
+    <div className="mt-2 w-full rounded-sm bg-[#F2ECE4] px-6 py-10 font-angka text-neutral-900">
       {/* header struk */}
       <div className="flex items-center justify-between">
         <p className="font-sans text-sm font-bold uppercase tracking-widest text-[#D62828]">
