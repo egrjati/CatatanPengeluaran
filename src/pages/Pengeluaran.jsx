@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FilterKategori from "@/components/pengeluaran/FilterKategori";
-// import RingkasanTotal from "@/components/pengeluaran/RingkasanTotal";
 import FormPengeluaran from "@/components/pengeluaran/FormPengeluaran";
 import TableBoard from "@/components/pengeluaran/TableBoard";
 import { dataPengeluaran } from "@/data/data";
@@ -8,25 +7,20 @@ import { dataPengeluaran } from "@/data/data";
 function Pengeluaran() {
   const [pengeluaran, setPengeluaran] = useState(dataPengeluaran);
 
-  function tambahPengeluaran(itemBaru) {
+  function tambahCatatan(itemBaru) {
     // spredOpration | bongkar array dan tambahkan yang baru : 1,2,3,itemBaru
-    setPengeluaran([...pengeluaran, itemBaru]);
+    setPengeluaran((prev) => [...prev, itemBaru]);
   }
 
-  // pengeluaran dari useState
-  // const totalPengeluaran = pengeluaran.reduce(
-  //   (total, item) => total + item.jumlah,
-  //   0,
-  // );
+  function hapusCatatan(id) {
+    setPengeluaran((prev) => prev.filter((catatan) => catatan.id !== id));
+  }
 
   return (
     <div className="mx-auto flex flex-col lg:flex lg:flex-row lg:items-start justify-center gap-4 lg:gap-12 p-4">
-      {/* Total Pengeluaran */}
-      {/* <RingkasanTotal hasil={totalPengeluaran} /> */}
-
       {/* Inputan */}
       <div className="lg:sticky lg:top-4">
-        <FormPengeluaran onTambah={tambahPengeluaran} />
+        <FormPengeluaran onTambah={tambahCatatan} />
       </div>
 
       {/* Kanan */}
@@ -37,7 +31,7 @@ function Pengeluaran() {
         </div>
 
         {/* Table */}
-        <TableBoard datas={pengeluaran} />
+        <TableBoard datas={pengeluaran} onHapus={hapusCatatan} />
       </div>
     </div>
   );
