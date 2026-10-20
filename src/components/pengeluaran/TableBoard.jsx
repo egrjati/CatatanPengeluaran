@@ -1,20 +1,22 @@
 import { formatRupiah } from "@/utils/format";
+import { Trash } from "lucide-react";
+import notebookLockup from "@/assets/icon/notebook-mark.svg";
 
-function TableBoard({ datas }) {
+function TableBoard({ datas, onHapus }) {
   // Early return
   if (datas.length === 0) {
     return (
-      <div className="w-full py-24 mt-5 rounded-md bg-white border border-black/30 flex flex-col gap-2 justify-center items-center tracking-wide">
+      <div className="w-full py-24 mt-5 rounded-md bg-white border-2 border-dashed border-black/50 flex flex-col gap-2 justify-center items-center tracking-wide">
         <img
-          src=""
+          src={notebookLockup}
           alt="Logo Catatan"
-          className="w-16 h-16 lg:w-22 lg:h-22 opacity-55"
+          className="w-16 h-16 lg:w-44 "
         />
         <h1 className="font-bold text-sm md:text-base text-black">
           Belum ada pengeluaran
         </h1>
         <p className="text-black/60 font-medium text-xs lg:text-sm max-w-xs lg:max-w-sm text-center tracking-wide">
-          Catat pengeluaran pertamamu lewat form di atas
+          Catat pengeluaran pertamamu Segera
         </p>
       </div>
     );
@@ -23,21 +25,21 @@ function TableBoard({ datas }) {
   // Pengelompokan sesuai dengan data tanggal
   const perTanggal = datas.reduce((kelompok, item) => {
     const kunci = item.tanggal;
-    const isiLama = kelompok[kunci] || [];
+    const isiLama = kelompok[kunci] || []; //bracket notion
     kelompok[kunci] = [...isiLama, item];
     return kelompok;
   }, {});
 
   // sort by tanggal terbaru
-  const tanggalUrut = Object.entries(perTanggal).sort((a, b) =>
-    b[0].localeCompare(a[0]),
+  const tanggalUrut = Object.entries(perTanggal).sort(
+    (a, b) => b[0].localeCompare(a[0]), //baru kelama (ba) sebaliknya lama ke baru (ab)
   );
 
   // total semua pengeluaran untuk baris TOTAL di bawah struk
   const total = datas.reduce((jumlah, item) => jumlah + item.jumlah, 0);
 
   return (
-    <div className="mt-4 w-full rounded-sm bg-[#F2ECE4] px-6 py-10 font-angka text-neutral-900 shadow-md">
+    <div className="mt-2 w-full rounded-sm bg-[#F2ECE4] px-6 py-10 font-angka text-neutral-900">
       {/* header struk */}
       <div className="flex items-center justify-between">
         <p className="font-sans text-sm font-bold uppercase tracking-widest text-[#D62828]">
@@ -62,10 +64,20 @@ function TableBoard({ datas }) {
             {/* map dalam */}
             {items.map((item) => (
               <div key={item.id} className="mt-4 text-sm">
-                <p>{item.judul}</p>
+                {/* line 1 */}
+                <div className="flex justify-between items-center">
+                  <p>{item.judul}</p>
+                  <button
+                    type="button"
+                    onClick={() => onHapus(item.id)}
+                    aria-label={`Hapus ${item.nama}`}
+                  >
+                    <Trash className="w-3 mr-2 hover:text-[#D62828] cursor-pointer" />
+                  </button>
+                </div>
+                {/* line 2 */}
                 <div className="flex items-end gap-2">
                   <p className="text-xs text-neutral-500">{item.kategori}</p>
-                  {/* garis titik-titik penghubung ke harga */}
                   <span className="mb-1 flex-1 border-b-2 border-dotted border-neutral-400" />
                   <p>{formatRupiah.format(item.jumlah)}</p>
                 </div>

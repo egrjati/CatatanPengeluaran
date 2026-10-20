@@ -55,13 +55,15 @@ function FormPengeluaran({ onTambah }) {
     >
       {/* stiker miring di pojok */}
       <span className="absolute -top-4 left-5 -rotate-3 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-neutral-900 shadow-[2px_2px_0_#171717]">
-        ✍️ Jajan apa hari ini?
+        ✍️ Beli apa aja hari ini?
       </span>
 
       {/* judul form */}
-      <h2 className="text-2xl font-extrabold text-[#F2ECE4]">Catat Pengeluaran</h2>
-      <p className="mt-1 font-angka text-xs text-[#F2ECE4]/70">
-        biar dompet gak kaget di akhir bulan 💸
+      <h2 className="text-2xl font-extrabold text-[#F2ECE4]">
+        Catat Pengeluaran
+      </h2>
+      <p className="mt-1 font-angka text-sm lg:text-base text-[#F2ECE4]/70">
+        biar dompet gak kaget di akhir bulan 
       </p>
 
       {/* Input Nama */}

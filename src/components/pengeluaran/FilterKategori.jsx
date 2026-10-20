@@ -2,7 +2,7 @@ import { daftarKategori } from "@/data/kategori";
 
 function FilterKategori() {
   return (
-    <div className="flex flex-wrap gap-2 mt-7">
+    <div className="flex flex-wrap gap-2 py-3">
       {/* Filter */}
       <button className="py-1 px-3 border border-black/30 text-white bg-black/90 font-medium rounded-xl text-xs">
         Semua
