@@ -1,6 +1,6 @@
 import { useState } from "react";
 import FilterKategori from "@/components/pengeluaran/FilterKategori";
-import FormPengeluaran from "@/components/pengeluaran/FormPengeluaran";
+import FormTambah from "@/components/pengeluaran/FormTambah";
 import TableBoard from "@/components/pengeluaran/TableBoard";
 import { dataPengeluaran } from "@/data/data";
 
@@ -20,7 +20,7 @@ function Pengeluaran() {
     <div className="mx-auto flex flex-col lg:flex lg:flex-row lg:items-start justify-center gap-4 lg:gap-12 p-4">
       {/* Inputan */}
       <div className="lg:sticky lg:top-4">
-        <FormPengeluaran onTambah={tambahCatatan} />
+        <FormTambah onTambah={tambahCatatan} />
       </div>
 
       {/* Kanan */}
