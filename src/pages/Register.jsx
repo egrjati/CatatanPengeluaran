@@ -5,9 +5,9 @@ import { Eye, EyeOff } from "lucide-react";
 import iconGoogle from "@/assets/icon/google.svg";
 
 function Register() {
-  const [daftarEmail, setDaftarEmail] = useState("")
+  const [daftarEmail, setDaftarEmail] = useState("");
   const [sandi, setSandi] = useState("");
-  const [name, setName] =useState("");
+  const [name, setName] = useState("");
   const [err, setErr] = useState({});
   const [showPass, setPass] = useState(false);
 
@@ -23,25 +23,23 @@ function Register() {
       newErr.name = "Nama tidak valid";
     }
 
-
-      // Email
-      if (daftarEmail.trim() === "") {
-        newErr.daftarEmail = "Email wajib diisi";
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(daftarEmail.trim())) {
-        newErr.daftarEmail = "Format tidak valid";
-      }
+    // Email
+    if (daftarEmail.trim() === "") {
+      newErr.daftarEmail = "Email wajib diisi";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(daftarEmail.trim())) {
+      newErr.daftarEmail = "Format tidak valid";
+    }
 
     // Pw
     if (sandi.trim() === "") {
       newErr.sandi = "Password wajib diisi";
-    } else if (sandi.length < 8 ) {
+    } else if (sandi.length < 8) {
       newErr.sandi = "Minimal 8 karakter";
-    } 
-
+    }
 
     setErr(newErr);
     if (Object.keys(newErr).length > 0) return;
-  }
+  };
 
   return (
     <div className="bg-black/10 min-h-dvh flex justify-center items-center px-4 py-10 [@media(max-height:720px)]:py-4">
@@ -62,7 +60,7 @@ function Register() {
 
         {/* From */}
         <form
-        noValidate
+          noValidate
           onSubmit={handleSubmit}
           className="w-full mt-5 flex flex-col gap-3 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:gap-2.5"
         >
@@ -80,7 +78,7 @@ function Register() {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
-                setErr({ ...err, name: "" });
+                setErr((prev) => ({ ...prev, name: "" }));
               }}
               type="text"
               placeholder="Wahyu Enggar Jati"
@@ -104,7 +102,7 @@ function Register() {
               value={daftarEmail}
               onChange={(e) => {
                 setDaftarEmail(e.target.value);
-                setErr({ ...err, daftarEmail: "" });
+                setErr((prev) => ({ ...prev, daftarEmail: "" }));
               }}
               type="email"
               placeholder="nama@example.com"
@@ -132,7 +130,7 @@ function Register() {
                 value={sandi}
                 onChange={(e) => {
                   setSandi(e.target.value);
-                  setErr({ ...err, sandi: "" });
+                  setErr((prev) => ({ ...prev, sandi: "" }));
                 }}
                 placeholder="Minimal 8 karakter"
                 className={`w-full pl-3.5 pr-12 py-2 bg-white border rounded-lg text-sm text-black/80 placeholder:text-black/40 focus:outline-none focus:border-[#2E7A62] focus:ring-1 focus:ring-[#2E7A62] ${err.sandi ? "border-red-500" : "border-black/20"}`}
@@ -152,11 +150,10 @@ function Register() {
                   <Eye className="w-4.5" />
                 )}
               </button>
-
             </div>
-              {err.sandi && (
-                <p className="text-red-500 text-xs font-medium">{err.sandi}</p>
-              )}
+            {err.sandi && (
+              <p className="text-red-500 text-xs font-medium">{err.sandi}</p>
+            )}
           </div>
 
           {/* Setuju */}

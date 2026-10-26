@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import Logo from "@/assets/icon/notebook-mark.svg";
-import iconGoogle from "@/assets/icon/google.svg"; 
+import iconGoogle from "@/assets/icon/google.svg";
 import { Eye, EyeOff } from "lucide-react";
 
 function Auth() {
@@ -68,7 +68,7 @@ function Auth() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setError({ ...error, email: "" });
+                setError((prev) => ({ ...prev, email: "" }));
               }}
               type="email"
               placeholder="nama@email.com"
@@ -98,7 +98,7 @@ function Auth() {
                 value={pw}
                 onChange={(e) => {
                   setPw(e.target.value);
-                  setError({ ...error, pw: "" });
+                  setError((prev) => ({ ...prev, pw: "" }));
                 }}
                 type={showPass ? "text" : "password"}
                 placeholder="Minimal 8 karakter"
