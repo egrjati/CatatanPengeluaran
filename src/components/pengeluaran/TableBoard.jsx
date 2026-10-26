@@ -36,7 +36,7 @@ function TableBoard({ datas, onHapus }) {
   );
 
   // total semua pengeluaran untuk baris TOTAL di bawah struk
-  const total = datas.reduce((jumlah, item) => jumlah + item.jumlah, 0);
+  const total = datas.reduce((harga, item) => harga + item.harga, 0);
 
   return (
     <div className="mt-2 w-full rounded-sm bg-[#F2ECE4] px-6 py-10 font-angka text-neutral-900">
@@ -52,7 +52,7 @@ function TableBoard({ datas, onHapus }) {
 
       {tanggalUrut.map(([tanggal, items]) => {
         // subtotal per tanggal
-        const subtotal = items.reduce((total, item) => total + item.jumlah, 0);
+        const subtotal = items.reduce((total, item) => total + item.harga, 0);
 
         return (
           <section key={tanggal} className="mt-6">
@@ -79,7 +79,7 @@ function TableBoard({ datas, onHapus }) {
                 <div className="flex items-end gap-2">
                   <p className="text-xs text-neutral-500">{item.kategori}</p>
                   <span className="mb-1 flex-1 border-b-2 border-dotted border-neutral-400" />
-                  <p>{formatRupiah.format(item.jumlah)}</p>
+                  <p>{formatRupiah.format(item.harga)}</p>
                 </div>
               </div>
             ))}

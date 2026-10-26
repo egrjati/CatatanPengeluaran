@@ -31,7 +31,7 @@ function FormPengeluaran({ onTambah }) {
     const itemBaru = {
       id: crypto.randomUUID(),
       judul: nama,
-      jumlah: hargaAngka,
+      harga: hargaAngka,
       kategori: kategori,
       tanggal: tanggal,
     };
@@ -63,7 +63,7 @@ function FormPengeluaran({ onTambah }) {
         Catat Pengeluaran
       </h2>
       <p className="mt-1 font-angka text-sm lg:text-base text-[#F2ECE4]/70">
-        biar dompet gak kaget di akhir bulan 
+        biar dompet gak kaget di akhir bulan
       </p>
 
       {/* Input Nama */}
