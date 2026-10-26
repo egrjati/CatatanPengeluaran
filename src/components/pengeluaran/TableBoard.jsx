@@ -65,14 +65,14 @@ function TableBoard({ datas, onHapus }) {
             {items.map((item) => (
               <div key={item.id} className="mt-4 text-sm">
                 {/* line 1 */}
-                <div className="flex justify-between items-center">
-                  <p>{item.judul}</p>
+                <div className="flex justify-between">
+                  <p className="min-w-0 wrap-break-word">{item.judul}</p>
                   <button
                     type="button"
                     onClick={() => onHapus(item.id)}
                     aria-label={`Hapus ${item.nama}`}
                   >
-                    <Trash className="w-3 mr-2 hover:text-[#D62828] cursor-pointer" />
+                    <Trash className="w-3 mr-2 hover:text-[#D62828] cursor-pointer shrink-0" />
                   </button>
                 </div>
                 {/* line 2 */}
