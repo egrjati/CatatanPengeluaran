@@ -13,16 +13,35 @@ function FormTambah({ onTambah }) {
     e.preventDefault();
 
     // Guard Validation
+    const namaBersih = nama.trim();
     const hargaAngka = Number(harga); //ubah [harga] jadi number di hargaAngka
 
-    if (nama.trim() === "") {
+    // Nama
+    if (namaBersih === "") {
       setError({ nama: "Nama Barang wajib diisi" });
       return;
     }
+    if (namaBersih.length > 50) {
+      setError({ nama: "Nama terlalu panjang" });
+      return;
+    }
+
+    // Harga
     if (Number.isNaN(hargaAngka) || hargaAngka <= 0) {
       setError({ harga: "Harga wajib diisi" });
       return;
     }
+    if (!Number.isInteger(hargaAngka)) {
+      setError({ harga: "Format wajib bilangan bulat" });
+      return;
+    }
+
+    if (hargaAngka > 2147483647) {
+      setError({ harga: "Harga Terlalu banyak" });
+      return;
+    }
+
+    // Tanggal
     if (tanggal === "") {
       setError({ tanggal: "tanggal belum diisi" });
       return;
@@ -75,7 +94,10 @@ function FormTambah({ onTambah }) {
           type="text"
           value={nama}
           placeholder="Contoh : Kopi Americano"
-          onChange={(e) => setNama(e.target.value)}
+          onChange={(e) => {
+            setNama(e.target.value);
+            setError((prev) => ({ ...prev, nama: "" }));
+          }}
           className={`mt-1.5 w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:font-normal placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.nama ? "ring-4 ring-[#FFE14D]" : ""}`}
         />
       </label>
@@ -95,7 +117,10 @@ function FormTambah({ onTambah }) {
               type="number"
               value={harga}
               placeholder="0"
-              onChange={(e) => setHarga(e.target.value)}
+              onChange={(e) => {
+                setHarga(e.target.value);
+                setError((prev) => ({ ...prev, harga: "" }));
+              }}
               className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-11 pr-4 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.harga ? "ring-4 ring-[#FFE14D]" : ""}`}
             />
           </div>
@@ -110,7 +135,10 @@ function FormTambah({ onTambah }) {
             <input
               type="date"
               value={tanggal}
-              onChange={(e) => setTanggal(e.target.value)}
+              onChange={(e) => {
+                setTanggal(e.target.value);
+                setError((prev) => ({ ...prev, tanggal: "" }));
+              }}
               className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-4 pr-10 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] [&::-webkit-calendar-picker-indicator]:opacity-0 ${error.tanggal ? "ring-4 ring-[#FFE14D]" : ""}`}
             />
             <CalendarFold className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-900" />
