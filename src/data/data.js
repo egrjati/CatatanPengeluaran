@@ -1,37 +1,16 @@
 export const dataPengeluaran = [
   {
-    id: 1,
-    judul: "Kopi Americano",
+    id: "f38a530d-4f4d-45ff-80cd-514edf56c0dc",
+    nama: "Kopi Americano",
     harga: 16000,
+    tanggal: "2026-09-19",
     kategori: "Minuman",
-    tanggal: "2026-09-19",
   },
   {
-    id: 2,
-    judul: "Bensin",
+    id: "4e3ea51e-a14f-4646-94c4-007680a70a46",
+    nama: "Bensin",
     harga: 10000,
+    tanggal: "2026-10-26",
     kategori: "Transport",
-    tanggal: "2026-09-19",
-  },
-  {
-    id: 3,
-    judul: "Nasi",
-    harga: 8000,
-    kategori: "Makanan",
-    tanggal: "2026-09-20",
-  },
-  {
-    id: 4,
-    judul: "Pentol",
-    harga: 5000,
-    kategori: "Camilan",
-    tanggal: "2026-09-20",
-  },
-  {
-    id: 5,
-    judul: "Rokok",
-    harga: 25000,
-    kategori: "Lainnya",
-    tanggal: "2026-09-20",
   },
 ];

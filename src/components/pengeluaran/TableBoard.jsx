@@ -66,7 +66,7 @@ function TableBoard({ datas, onHapus }) {
               <div key={item.id} className="mt-4 text-sm">
                 {/* line 1 */}
                 <div className="flex justify-between">
-                  <p className="min-w-0 wrap-break-word">{item.judul}</p>
+                  <p className="min-w-0 wrap-break-word">{item.nama}</p>
                   <button
                     type="button"
                     onClick={() => onHapus(item.id)}
