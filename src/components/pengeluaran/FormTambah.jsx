@@ -49,7 +49,7 @@ function FormTambah({ onTambah }) {
 
     const itemBaru = {
       id: crypto.randomUUID(),
-      judul: nama,
+      nama: nama,
       harga: hargaAngka,
       kategori: kategori,
       tanggal: tanggal,
@@ -77,7 +77,7 @@ function FormTambah({ onTambah }) {
         ✍️ Beli apa aja hari ini?
       </span>
 
-      {/* judul form */}
+      {/* Nama form */}
       <h2 className="text-2xl font-extrabold text-[#F2ECE4]">
         Catat Pengeluaran
       </h2>
