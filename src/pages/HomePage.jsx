@@ -1,10 +1,10 @@
 import { useState } from "react";
-import FilterKategori from "@/components/pengeluaran/FilterKategori";
-import FormTambah from "@/components/pengeluaran/FormTambah";
-import TableBoard from "@/components/pengeluaran/TableBoard";
+import FilterKategori from "@/components/catatan/FilterKategori";
+import FormTambah from "@/components/catatan/FormTambah";
+import TableBoard from "@/components/catatan/TableBoard";
 import { dataPengeluaran } from "@/data/data";
 
-function Pengeluaran() {
+function HomePage() {
   const [pengeluaran, setPengeluaran] = useState(dataPengeluaran);
 
   function tambahCatatan(itemBaru) {
@@ -36,4 +36,4 @@ function Pengeluaran() {
     </div>
   );
 }
-export default Pengeluaran;
+export default HomePage;
