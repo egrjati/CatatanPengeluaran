@@ -2,7 +2,26 @@ import { formatRupiah } from "@/utils/format";
 import { Trash } from "lucide-react";
 import notebookLockup from "@/assets/icon/notebook-mark.svg";
 
-function TableBoard({ datas, onHapus }) {
+function TableBoard({ datas, onHapus, error, loading }) {
+  if (loading)
+    return (
+      <div className="mt-2 w-full rounded-sm bg-[#F2ECE4] py-24 flex justify-center items-center">
+        <p className="text-sm font-semibold tracking-widest text-neutral-500 animate-pulse">
+          Memuat data...
+        </p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="mt-2 w-full rounded-sm bg-[#F2ECE4] py-24 flex flex-col gap-1 justify-center items-center text-center">
+        <p className="text-sm font-semibold tracking-widest text-[#D62828]">
+          Terjadi kesalahan
+        </p>
+        <p className="text-xs text-neutral-500">{error}</p>
+      </div>
+    );
+
   // Early return
   if (datas.length === 0) {
     return (
