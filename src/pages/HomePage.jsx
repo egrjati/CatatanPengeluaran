@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ambilSemuaCatatan } from "@/api/catatan.js";
 import FilterKategori from "@/components/catatan/FilterKategori";
 import FormTambah from "@/components/catatan/FormTambah";
 import TableBoard from "@/components/catatan/TableBoard";
-import { dataPengeluaran } from "@/data/data";
 
 function HomePage() {
-  const [pengeluaran, setPengeluaran] = useState(dataPengeluaran);
+  const [pengeluaran, setPengeluaran] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Get
+  useEffect(() => {
+    async function muatCatatan() {
+      try {
+        const data = await ambilSemuaCatatan();
+        setPengeluaran(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    muatCatatan();
+  }, []);
 
   function tambahCatatan(itemBaru) {
     // spredOpration | bongkar array dan tambahkan yang baru : 1,2,3,itemBaru
