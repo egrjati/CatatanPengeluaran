@@ -48,7 +48,12 @@ function HomePage() {
         </div>
 
         {/* Table */}
-        <TableBoard datas={pengeluaran} onHapus={hapusCatatan} />
+        <TableBoard
+          datas={pengeluaran}
+          loading={loading}
+          error={error}
+          onHapus={hapusCatatan}
+        />
       </div>
     </div>
   );
