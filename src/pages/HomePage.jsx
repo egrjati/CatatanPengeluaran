@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ambilSemuaCatatan } from "@/api/catatan.js";
+import { ambilSemuaCatatan, tambahCatatan } from "@/api/catatan.js";
 import FilterKategori from "@/components/catatan/FilterKategori";
 import FormTambah from "@/components/catatan/FormTambah";
 import TableBoard from "@/components/catatan/TableBoard";
@@ -24,9 +24,9 @@ function HomePage() {
     muatCatatan();
   }, []);
 
-  function tambahCatatan(itemBaru) {
-    // spredOpration | bongkar array dan tambahkan yang baru : 1,2,3,itemBaru
-    setPengeluaran((prev) => [...prev, itemBaru]);
+  async function tambahPengeluaran(itemBaru) {
+    const catatanBaru = await tambahCatatan(itemBaru);
+    setPengeluaran((prev) => [catatanBaru, ...prev]);
   }
 
   function hapusCatatan(id) {
@@ -37,7 +37,7 @@ function HomePage() {
     <div className="mx-auto flex flex-col lg:flex lg:flex-row lg:items-start justify-center gap-4 lg:gap-12 p-4">
       {/* Inputan */}
       <div className="lg:sticky lg:top-4">
-        <FormTambah onTambah={tambahCatatan} />
+        <FormTambah onTambah={tambahPengeluaran} />
       </div>
 
       {/* Kanan */}
