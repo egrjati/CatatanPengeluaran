@@ -48,7 +48,6 @@ function FormTambah({ onTambah }) {
     }
 
     const itemBaru = {
-      id: crypto.randomUUID(),
       nama: nama,
       harga: hargaAngka,
       kategori: kategori,
