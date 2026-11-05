@@ -3,4 +3,49 @@
 @theme {
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
   --font-angka: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  /* Animasi popup */
+  --animate-fade-masuk: fade-masuk 0.2s ease-out;
+  --animate-sheet-naik: sheet-naik 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  --animate-pop-masuk: pop-masuk 0.2s ease-out;
+
+  /* lapisan gelap muncul pelan */
+  @keyframes fade-masuk {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* mobile: naik dari bawah layar (ala iPhone) */
+  @keyframes sheet-naik {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  /* desktop: sedikit membesar di tengah */
+  @keyframes pop-masuk {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* Sembunyikan scrollbar bawaan browser (halaman tetap bisa di-scroll) */
+html {
+  scrollbar-width: none; /* Firefox */
+}
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
 }
