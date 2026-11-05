@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { keTanggalLokal } from "@/utils/tanggal";
 import { ArrowUpRight, CalendarFold, TriangleAlert } from "lucide-react";
 import { daftarKategori } from "@/data/kategori";
 
@@ -8,6 +9,14 @@ function FormTambah({ onTambah }) {
   const [kategori, setKategori] = useState(daftarKategori[0]);
   const [tanggal, setTanggal] = useState("");
   const [error, setError] = useState({});
+
+  const objKemarin = new Date();
+  objKemarin.setDate(objKemarin.getDate() - 1);
+  const kemarin = keTanggalLokal(objKemarin);
+  console.log(kemarin);
+
+  const hariIni = keTanggalLokal(new Date());
+  console.log(hariIni);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -82,16 +91,13 @@ function FormTambah({ onTambah }) {
       </span>
 
       {/* Nama form */}
-      <h2 className="text-2xl font-extrabold text-[#F2ECE4]">
+      <h2 className="text-2xl lg:text-3xl text-center font-extrabold text-[#F2ECE4]">
         Catat Pengeluaran
       </h2>
-      <p className="mt-1 font-angka text-sm lg:text-base text-[#F2ECE4]/70">
-        biar dompet gak kaget di akhir bulan
-      </p>
 
       {/* Input Nama */}
-      <label className="mt-6 block">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
+      <label className="mt-4 block">
+        <span className="text-sm font-bold uppercase tracking-wider text-[#F2ECE4]">
           Beli apa?
         </span>
         <input
@@ -106,39 +112,72 @@ function FormTambah({ onTambah }) {
         />
       </label>
 
-      {/* Harga & Tanggal */}
-      <div className="mt-5 grid grid-cols-2 gap-4">
-        {/* Harga */}
-        <label className="block">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
-            Harga
+      {/* Harga */}
+      <label className="mt-3 block">
+        <span className="text-sm font-bold uppercase tracking-wider text-[#F2ECE4]">
+          Harga
+        </span>
+        <div className="relative mt-1.5">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 font-angka text-sm font-bold text-neutral-500">
+            Rp
           </span>
-          <div className="relative mt-1.5">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 font-angka text-sm font-bold text-neutral-500">
-              Rp
-            </span>
-            <input
-              type="number"
-              value={harga}
-              placeholder="0"
-              onChange={(e) => {
-                setHarga(e.target.value);
-                setError((prev) => ({ ...prev, harga: "" }));
-              }}
-              className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-11 pr-4 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.harga ? "ring-4 ring-[#FFE14D]" : ""}`}
-            />
-          </div>
-        </label>
+          <input
+            type="number"
+            value={harga}
+            placeholder="0"
+            onChange={(e) => {
+              setHarga(e.target.value);
+              setError((prev) => ({ ...prev, harga: "" }));
+            }}
+            className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-11 pr-4 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.harga ? "ring-4 ring-[#FFE14D]" : ""}`}
+          />
+        </div>
+      </label>
 
-        {/* Tanggal */}
-        <label className="block min-w-0">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
-            Kapan?
-          </span>
-          <div className="relative mt-1.5">
+      {/* Tanggal */}
+      <div className="mt-3">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
+          Kapan?
+        </span>
+        <div className="mt-1.5 flex flex-wrap items-center gap-2">
+          {/* Hariini */}
+          <button
+            onClick={() => {
+              setTanggal(hariIni);
+              setError((prev) => ({ ...prev, tanggal: "" }));
+            }}
+            type="button"
+            className={`shrink-0 cursor-pointer rounded-xl border-2 border-neutral-900 px-4 py-3 text-xs font-bold shadow-[3px_3px_0_#171717] transition hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#171717] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none
+              ${
+                tanggal === hariIni
+                  ? "bg-neutral-900 text-white"
+                  : "bg-[#F2ECE4] text-neutral-900"
+              }
+              `}
+          >
+            Hari ini
+          </button>
+
+          {/* Kemarin */}
+          <button
+            onClick={() => {
+              setTanggal(kemarin);
+              setError((prev) => ({ ...prev, tanggal: "" }));
+            }}
+            type="button"
+            className={`shrink-0 cursor-pointer rounded-xl border-2 border-neutral-900 px-4 py-3 text-xs font-bold shadow-[3px_3px_0_#171717] transition hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#171717] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none
+              ${tanggal === kemarin ? "bg-neutral-900 text-white" : "bg-[#F2ECE4] text-neutral-900"}
+              `}
+          >
+            Kemarin
+          </button>
+
+          {/* Tanggal */}
+          <div className="relative min-w-40 flex-1">
             <input
               type="date"
               value={tanggal}
+              onClick={(e) => e.currentTarget.showPicker()}
               onChange={(e) => {
                 setTanggal(e.target.value);
                 setError((prev) => ({ ...prev, tanggal: "" }));
@@ -147,7 +186,7 @@ function FormTambah({ onTambah }) {
             />
             <CalendarFold className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-900" />
           </div>
-        </label>
+        </div>
       </div>
 
       {/* Kategori */}
