@@ -9,7 +9,7 @@ function FormTambah({ onTambah }) {
   const [tanggal, setTanggal] = useState("");
   const [error, setError] = useState({});
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // Guard Validation
@@ -47,20 +47,25 @@ function FormTambah({ onTambah }) {
       return;
     }
 
+    // objek
     const itemBaru = {
       nama: nama,
       harga: hargaAngka,
       kategori: kategori,
       tanggal: tanggal,
     };
-    onTambah(itemBaru);
 
-    // Kosongkan lagi
-    setNama("");
-    setHarga("");
-    setKategori(daftarKategori[0]);
-    setTanggal("");
-    setError({});
+    try {
+      await onTambah(itemBaru);
+      // Kosongkan lagi
+      setNama("");
+      setHarga("");
+      setKategori(daftarKategori[0]);
+      setTanggal("");
+      setError({});
+    } catch (err) {
+      setError({ server: err.message });
+    }
   }
 
   // Validasi pakai early return
@@ -172,7 +177,7 @@ function FormTambah({ onTambah }) {
         <ArrowUpRight className="h-5 w-5" strokeWidth={3} />
       </button>
 
-      {/* Satu tempat tetap untuk pesan error */}
+      {/* Pesan error */}
       {pesanError && (
         <p className="mt-4 flex items-center gap-2 rounded-xl border-2 border-neutral-900 bg-[#FFE14D] px-4 py-2.5 text-xs font-bold text-neutral-900">
           <TriangleAlert className="h-4 w-4 shrink-0" />
