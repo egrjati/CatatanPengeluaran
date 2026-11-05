@@ -18,3 +18,13 @@ export async function tambahCatatan(data) {
   if (!respon.ok) throw new Error(isiBalasan.pesan);
   return isiBalasan;
 }
+
+export async function hapusCatatan(id) {
+  const respon = await fetch(`${BASE_URL}/pengeluaran/${id}`, {
+    method: "DELETE",
+  });
+  const isiBalasan = await respon.json();
+
+  if (!respon.ok) throw new Error(isiBalasan.pesan);
+  return isiBalasan;
+}
