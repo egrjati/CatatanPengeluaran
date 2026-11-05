@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { ambilSemuaCatatan, tambahCatatan } from "@/api/catatan.js";
+import {
+  ambilSemuaCatatan,
+  tambahCatatan,
+  hapusCatatan,
+} from "@/api/catatan.js";
 import FilterKategori from "@/components/catatan/FilterKategori";
 import FormTambah from "@/components/catatan/FormTambah";
 import TableBoard from "@/components/catatan/TableBoard";
@@ -29,8 +33,13 @@ function HomePage() {
     setPengeluaran((prev) => [catatanBaru, ...prev]);
   }
 
-  function hapusCatatan(id) {
-    setPengeluaran((prev) => prev.filter((catatan) => catatan.id !== id));
+  async function hapusPengeluaran(id) {
+    try {
+      await hapusCatatan(id);
+      setPengeluaran((prev) => prev.filter((catatan) => catatan.id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
   return (
@@ -52,7 +61,7 @@ function HomePage() {
           datas={pengeluaran}
           loading={loading}
           error={error}
-          onHapus={hapusCatatan}
+          onHapus={hapusPengeluaran}
         />
       </div>
     </div>
