@@ -1,15 +1,13 @@
 import { daftarKategori } from "@/data/kategori";
 
-// aktif = nama kategori yang sedang dipilih (default "Semua")
+// aktif = kategori terpilih
 function FilterKategoriPil({ aktif = "Semua" }) {
   const semuaPilihan = ["Semua", ...daftarKategori];
 
   return (
-    // mobile: 1 baris, geser ke samping (scrollbar disembunyikan), mentok ke tepi layar
-    // desktop (md): turun ke baris baru kalau tidak muat
+    // mobile: geser samping | desktop: wrap
     <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 pt-1 scrollbar-none md:mx-0 md:flex-wrap md:overflow-visible md:p-0 [&::-webkit-scrollbar]:hidden">
       {semuaPilihan.map((k) => (
-        // TODO: onClick untuk logika filter
         <button
           key={k}
           type="button"

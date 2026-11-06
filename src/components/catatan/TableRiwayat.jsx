@@ -1,4 +1,4 @@
-import { formatRupiah } from "@/utils/format";
+import { formatRupiah, formatTanggal } from "@/utils/format";
 import { Trash2 } from "lucide-react";
 import notebookLockup from "@/assets/icon/notebook-mark.svg";
 
@@ -43,7 +43,7 @@ function TableRiwayat({ datas, onHapus, error, loading }) {
     );
   }
 
-  // Pengelompokan sesuai dengan data tanggal
+  // Kelompokkan per tanggal
   const perTanggal = datas.reduce((kelompok, item) => {
     const kunci = item.tanggal;
     const isiLama = kelompok[kunci] || []; //bracket notion
@@ -53,10 +53,10 @@ function TableRiwayat({ datas, onHapus, error, loading }) {
 
   // sort by tanggal terbaru
   const tanggalUrut = Object.entries(perTanggal).sort(
-    (a, b) => b[0].localeCompare(a[0]), //baru kelama (ba) sebaliknya lama ke baru (ab)
+    (a, b) => b[0].localeCompare(a[0]), // b-a: terbaru dulu
   );
 
-  // total semua pengeluaran untuk baris TOTAL di bawah
+  // Total keseluruhan
   const total = datas.reduce((harga, item) => harga + item.harga, 0);
 
   return (
@@ -66,16 +66,17 @@ function TableRiwayat({ datas, onHapus, error, loading }) {
         const subtotal = items.reduce((total, item) => total + item.harga, 0);
 
         return (
-          <section
-            key={tanggal}
-            // mobile: grup pertama tanpa garis atas (biar tidak dobel dengan tepi kartu)
-            className="border-t-2 border-dashed border-neutral-900 pb-2 pt-3 max-md:first:border-t-0 max-md:first:pt-1"
-          >
-            {/* Header grup: tanggal + subtotal */}
-            {/* TODO: label "HARI INI" / "KEMARIN" & nama hari */}
-            <div className="flex items-center justify-between font-angka text-xs font-semibold uppercase tracking-wider text-neutral-700">
-              <p>{tanggal.split("-").reverse().join("/")}</p>
-              <p>{formatRupiah.format(subtotal)}</p>
+          <section key={tanggal} className="pb-2 pt-4 first:pt-1">
+            {/* Pembatas tanggal: --- tanggal · subtotal --- */}
+            <div className="flex items-center gap-3">
+              <span className="flex-1 border-t-2 border-dashed border-neutral-900/40" />
+              <p className="shrink-0 text-xs font-extrabold uppercase tracking-wider text-neutral-900">
+                {formatTanggal.format(new Date(`${tanggal}T00:00:00`))}
+                <span className="ml-2 font-angka font-semibold normal-case tracking-normal text-neutral-500">
+                  · {formatRupiah.format(subtotal)}
+                </span>
+              </p>
+              <span className="flex-1 border-t-2 border-dashed border-neutral-900/40" />
             </div>
 
             {/* map dalam */}
@@ -89,7 +90,6 @@ function TableRiwayat({ datas, onHapus, error, loading }) {
                   <p className="wrap-break-word text-sm font-bold">
                     {item.nama}
                   </p>
-                  {/* TODO: warna badge sesuai kategori */}
                   <span className="mt-1 inline-block rounded-full border-2 border-neutral-900 bg-white px-2 py-0.5 font-angka text-[10px] font-bold uppercase tracking-wider">
                     {item.kategori}
                   </span>
