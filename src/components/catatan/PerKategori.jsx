@@ -14,7 +14,6 @@ function PerKategori({ datas }) {
       {/* Daftar kategori */}
       <div className="mt-5 space-y-4">
         {datas.map((item) => (
-          // TODO: logika klik untuk filter riwayat
           <button
             key={item.kategori}
             type="button"

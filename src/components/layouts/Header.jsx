@@ -3,7 +3,7 @@ import notebookMark from "@/assets/icon/notebook-mark.svg";
 
 function Header({ onBukaForm }) {
   return (
-    // mobile: menyatu dengan background krem | desktop (md): putih + garis bawah
+    // mobile: krem | desktop: putih
     <header className="sticky top-0 z-30 bg-[#FAF6F0] md:border-b-2 md:border-neutral-900 md:bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 md:py-3">
         {/* Logo + nama app */}
@@ -20,8 +20,7 @@ function Header({ onBukaForm }) {
 
         {/* Kanan */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          {/* Pemilih bulan versi MOBILE: pil dengan panah bawah */}
-          {/* TODO: logika pilih bulan */}
+          {/* Pilih bulan (mobile) */}
           <button
             type="button"
             className="flex items-center gap-1.5 rounded-full border-2 border-neutral-900 bg-white px-3.5 py-1.5 font-angka text-xs font-bold tracking-wider text-neutral-900 md:hidden"
@@ -30,8 +29,7 @@ function Header({ onBukaForm }) {
             <ChevronDown className="h-4 w-4" strokeWidth={2.5} />
           </button>
 
-          {/* Pemilih bulan versi DESKTOP: < bulan > */}
-          {/* TODO: logika ganti bulan (prev / next) */}
+          {/* Pilih bulan (desktop) */}
           <div className="hidden items-center gap-1 rounded-full border-2 border-neutral-900 bg-white px-1 py-1 shadow-[2px_2px_0_#171717] md:flex">
             <button
               type="button"
@@ -41,7 +39,6 @@ function Header({ onBukaForm }) {
               <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
             </button>
 
-            {/* TODO: ganti teks statis ini dengan bulan aktif */}
             <span className="w-24 text-center font-angka text-xs font-bold tracking-wider text-neutral-900">
               NOV 2026
             </span>
@@ -55,7 +52,7 @@ function Header({ onBukaForm }) {
             </button>
           </div>
 
-          {/* Tombol catat (desktop saja, di mobile pindah ke bawah layar) */}
+          {/* Tombol catat (desktop) */}
           <button
             type="button"
             onClick={onBukaForm}

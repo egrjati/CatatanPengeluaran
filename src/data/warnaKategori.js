@@ -1,5 +1,4 @@
-// Warna tiap kategori (khusus tampilan)
-// Dipakai di progress bar Per Kategori & badge di Riwayat
+// Warna kategori: progress bar & badge
 export const warnaKategori = {
   Makanan: "bg-[#F4845F]",
   Minuman: "bg-[#7B9CFF]",
