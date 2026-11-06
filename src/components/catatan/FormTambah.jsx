@@ -7,27 +7,29 @@ function FormTambah({ onTambah }) {
   const [nama, setNama] = useState("");
   const [harga, setHarga] = useState("");
   const [kategori, setKategori] = useState(daftarKategori[0]);
-  const [tanggal, setTanggal] = useState("");
+  const [tanggal, setTanggal] = useState(keTanggalLokal(new Date()));
   const [error, setError] = useState({});
 
   const objKemarin = new Date();
   objKemarin.setDate(objKemarin.getDate() - 1);
   const kemarin = keTanggalLokal(objKemarin);
-  console.log(kemarin);
 
   const hariIni = keTanggalLokal(new Date());
-  console.log(hariIni);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     // Guard Validation
     const namaBersih = nama.trim();
-    const hargaAngka = Number(harga); //ubah [harga] jadi number di hargaAngka
+    const hargaAngka = Number(harga); // string -> number
 
     // Nama
     if (namaBersih === "") {
       setError({ nama: "Nama Barang wajib diisi" });
+      return;
+    }
+    if (!/[a-zA-Z]/.test(nama)) {
+      setError({ nama: "Nama harus mengandung huruf" });
       return;
     }
     if (namaBersih.length > 50) {
@@ -70,7 +72,7 @@ function FormTambah({ onTambah }) {
       setNama("");
       setHarga("");
       setKategori(daftarKategori[0]);
-      setTanggal("");
+      setTanggal(hariIni);
       setError({});
     } catch (err) {
       setError({ server: err.message });
@@ -117,19 +119,20 @@ function FormTambah({ onTambah }) {
         <span className="text-sm font-bold uppercase tracking-wider text-[#F2ECE4]">
           Harga
         </span>
-        <div className="relative mt-1.5">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 font-angka text-sm font-bold text-neutral-500">
+        <div className="relative mt-1.5 transition focus-within:-translate-y-0.5">
+          <span className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 font-angka text-sm font-bold text-neutral-500">
             Rp
           </span>
           <input
-            type="number"
-            value={harga}
+            type="text"
+            inputMode="numeric"
+            value={harga === "" ? "" : Number(harga).toLocaleString("id-ID")}
             placeholder="0"
             onChange={(e) => {
-              setHarga(e.target.value);
+              setHarga(e.target.value.replace(/\D/g, ""));
               setError((prev) => ({ ...prev, harga: "" }));
             }}
-            className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-11 pr-4 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.harga ? "ring-4 ring-[#FFE14D]" : ""}`}
+            className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-11 pr-4 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:text-neutral-400 focus:shadow-[5px_5px_0_#171717] ${error.harga ? "ring-4 ring-[#FFE14D]" : ""}`}
           />
         </div>
       </label>
@@ -172,8 +175,8 @@ function FormTambah({ onTambah }) {
             Kemarin
           </button>
 
-          {/* Tanggal */}
-          <div className="relative min-w-40 flex-1">
+          {/* Tanggal custom */}
+          <div className="relative min-w-40 flex-1 transition focus-within:-translate-y-0.5">
             <input
               type="date"
               value={tanggal}
@@ -182,9 +185,9 @@ function FormTambah({ onTambah }) {
                 setTanggal(e.target.value);
                 setError((prev) => ({ ...prev, tanggal: "" }));
               }}
-              className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-4 pr-10 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] [&::-webkit-calendar-picker-indicator]:opacity-0 ${error.tanggal ? "ring-4 ring-[#FFE14D]" : ""}`}
+              className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-4 pr-10 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:shadow-[5px_5px_0_#171717] [&::-webkit-calendar-picker-indicator]:opacity-0 ${error.tanggal ? "ring-4 ring-[#FFE14D]" : ""}`}
             />
-            <CalendarFold className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-900" />
+            <CalendarFold className="pointer-events-none absolute right-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-neutral-900" />
           </div>
         </div>
       </div>
@@ -216,9 +219,12 @@ function FormTambah({ onTambah }) {
         <ArrowUpRight className="h-5 w-5" strokeWidth={3} />
       </button>
 
-      {/* Pesan error */}
+      {/* Pesan error (absolute, form tidak bergeser) */}
       {pesanError && (
-        <p className="mt-4 flex items-center gap-2 rounded-xl border-2 border-neutral-900 bg-[#FFE14D] px-4 py-2.5 text-xs font-bold text-neutral-900">
+        <p
+          role="alert"
+          className="absolute bottom-3 left-1/2 z-10 flex w-max max-w-[calc(100%-3rem)] -translate-x-1/2 rotate-1 animate-pop-masuk items-center gap-2 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-4 py-1.5 text-xs font-bold text-neutral-900 shadow-[2px_2px_0_#171717] md:-bottom-4"
+        >
           <TriangleAlert className="h-4 w-4 shrink-0" />
           {pesanError}
         </p>
