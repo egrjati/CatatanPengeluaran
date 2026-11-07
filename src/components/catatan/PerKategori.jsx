@@ -1,8 +1,11 @@
 import { formatRupiah } from "@/utils/format";
 import { warnaKategori } from "@/data/warnaKategori";
+import { hitungPerKategori } from "@/utils/ringkasan";
 
 // datas = [{ kategori: "Transport", total: 40000, persen: 46 }, ...]
-function PerKategori({ datas }) {
+function PerKategori({ pengeluaran }) {
+  const daftarTotal = hitungPerKategori(pengeluaran);
+
   return (
     <div className="rounded-2xl border-2 border-neutral-900 bg-white p-5 shadow-[5px_5px_0_#171717]">
       {/* Judul */}
@@ -13,7 +16,7 @@ function PerKategori({ datas }) {
 
       {/* Daftar kategori */}
       <div className="mt-5 space-y-4">
-        {datas.map((item) => (
+        {daftarTotal.map((item) => (
           <button
             key={item.kategori}
             type="button"
