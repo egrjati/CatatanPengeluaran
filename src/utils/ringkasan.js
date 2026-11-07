@@ -63,12 +63,22 @@ export function hitungPerKategori(pengeluaran) {
     return toples;
   }, {});
 
+  //Hitung totalSemua
+  const totalSemua = catatanBulanIni.reduce(
+    (total, catatan) => total + catatan.harga,
+    0,
+  );
+
   // Ubah toples jadi daftar semua kategori
-  const daftarTotal = daftarKategori.map((kategori) => ({
-    kategori,
+  const daftarTotal = daftarKategori.map((kategori) => {
     // ambil total dari toples (0 kalau belum ada transaksi)
-    total: totalPerKategori[kategori] ?? 0,
-  }));
+    const total = totalPerKategori[kategori] ?? 0;
+    // Persen
+    const persen =
+      totalSemua === 0 ? 0 : Math.round((total / totalSemua) * 100);
+
+    return { kategori, total, persen };
+  });
 
   return daftarTotal.sort((a, b) => b.total - a.total);
 }

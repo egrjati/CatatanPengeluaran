@@ -128,15 +128,7 @@ function Home() {
 
           {/* Kanan:(desktop) */}
           <div className="hidden min-w-0 md:block">
-            <PerKategori
-              datas={[
-                { kategori: "Transport", total: 40000, persen: 46 },
-                { kategori: "Makanan", total: 30000, persen: 34 },
-                { kategori: "Camilan", total: 8000, persen: 9 },
-                { kategori: "Minuman", total: 6500, persen: 7 },
-                { kategori: "Lainnya", total: 3000, persen: 3 },
-              ]}
-            />
+            <PerKategori pengeluaran={pengeluaran} />
           </div>
         </div>
       </main>
