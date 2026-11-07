@@ -7,14 +7,29 @@ const gayaWarna = {
   putih: "bg-white text-neutral-900",
 };
 
-function KartuRingkasan({ label, nilai, keterangan, warna = "putih", stiker }) {
+// Pilihan warna stiker
+const gayaStiker = {
+  hitam: "bg-neutral-900 text-[#F2ECE4]",
+  kuning: "bg-[#FFE14D] text-neutral-900",
+  merah: "bg-[#D62828] text-[#F2ECE4]",
+  putih: "bg-white text-neutral-900",
+};
+
+function KartuRingkasan({
+  label,
+  nilai,
+  keterangan,
+  warna = "putih",
+  stiker,
+  warnaStiker = "hitam",
+}) {
   return (
     <div
-      className={`relative rounded-2xl border-2 border-neutral-900 px-5 pb-5 pt-6 shadow-[5px_5px_0_#171717] ${gayaWarna[warna]}`}
+      className={`relative flex h-full flex-col items-center justify-center rounded-2xl border-2 border-neutral-900 px-5 pb-5 pt-6 text-center shadow-[5px_5px_0_#171717] ${gayaWarna[warna]}`}
     >
       {/* Stiker miring (opsional) */}
       {stiker && (
-        <span className="absolute -top-3.5 left-4 -rotate-3 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-neutral-900 shadow-[2px_2px_0_#171717]">
+        <span className={`absolute -top-3.5 left-4 -rotate-3 rounded-full border-2 border-neutral-900 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide shadow-[2px_2px_0_#171717] ${gayaStiker[warnaStiker]}`}>
           {stiker}
         </span>
       )}

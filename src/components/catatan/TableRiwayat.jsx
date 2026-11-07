@@ -56,9 +56,6 @@ function TableRiwayat({ datas, onHapus, error, loading }) {
     (a, b) => b[0].localeCompare(a[0]), // b-a: terbaru dulu
   );
 
-  // Total keseluruhan
-  const total = datas.reduce((harga, item) => harga + item.harga, 0);
-
   return (
     <div className="px-6 pb-6 pt-4 text-neutral-900">
       {tanggalUrut.map(([tanggal, items]) => {
@@ -114,12 +111,6 @@ function TableRiwayat({ datas, onHapus, error, loading }) {
           </section>
         );
       })}
-
-      {/* total keseluruhan */}
-      <div className="flex items-center justify-between border-t-4 border-double border-neutral-900 pt-4 font-angka font-extrabold">
-        <p className="text-lg tracking-wider">TOTAL:</p>
-        <p className="text-2xl">{formatRupiah.format(total)}</p>
-      </div>
     </div>
   );
 }
