@@ -5,13 +5,12 @@ import {
   hapusCatatan,
 } from "@/api/catatan.js";
 import Header from "@/components/layouts/Header";
-import KartuRingkasan from "@/components/catatan/KartuRingkasan";
 import TableRiwayat from "@/components/catatan/TableRiwayat";
 import PerKategori from "@/components/catatan/PerKategori";
 import InputCari from "@/components/ui/InputCari";
 import FilterKategori from "@/components/catatan/FilterKategori";
 import FormTambah from "@/components/catatan/FormTambah";
-import KartuRingkasanMobile from "@/components/catatan/KartuRingkasanMobile";
+import PanelRingkasan from "@/components/catatan/PanelRingkasan";
 import { Plus } from "lucide-react";
 
 function Home() {
@@ -59,7 +58,8 @@ function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF6F0] lg:flex lg:h-dvh lg:flex-col lg:overflow-hidden">
+    // Mobile & lg: tinggi dikunci 1 layar, hanya riwayat yang scroll. md: scroll normal
+    <div className="flex h-dvh flex-col overflow-hidden bg-[#FAF6F0] md:block md:h-auto md:min-h-screen md:overflow-visible lg:flex lg:h-dvh lg:overflow-hidden">
       <Header onBukaForm={() => setBukaForm(true)} />
 
       {/* Popup form tambah */}
@@ -84,48 +84,23 @@ function Home() {
         </div>
       )}
 
-      {/* pb-28: ruang tombol mobile */}
-      <main className="mx-auto max-w-6xl px-4 pb-28 pt-4 md:py-3 lg:flex lg:min-h-0 lg:w-full lg:flex-1 lg:flex-col">
-        {/* Ringkasan mobile */}
-        <div className="pt-3 md:hidden">
-          <KartuRingkasanMobile
-            total={87500}
-            hariIni={17500}
-            rataRata={17500}
-          />
-        </div>
+      <main className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col px-4 pt-4 md:block md:py-3 lg:flex">
+        {/* Ringkasan */}
+        <PanelRingkasan pengeluaran={pengeluaran} />
 
-        {/* Ringkasan desktop */}
-        <div className="hidden gap-5 pt-3 md:grid md:grid-cols-3">
-          <KartuRingkasan
-            warna="merah"
-            stiker="Bulan ini"
-            label="total pengeluaran"
-            nilai={87500}
-            keterangan="8 transaksi"
-          />
-          <KartuRingkasan
-            warna="kuning"
-            label="hari ini"
-            nilai={17500}
-            keterangan="3 transaksi"
-          />
-          <KartuRingkasan
-            warna="putih"
-            label="rata-rata per hari"
-            nilai={17500}
-            keterangan="1-5 November"
-          />
-        </div>
-
-        <div className="mt-7 grid items-start gap-5 lg:min-h-0 lg:flex-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)]">
+        <div className="mt-7 flex min-h-0 flex-1 flex-col md:grid md:items-start md:gap-5 lg:min-h-0 lg:flex-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)]">
           {/* Histori*/}
-          <div className="min-w-0 md:overflow-hidden md:rounded-2xl md:border-2 md:border-neutral-900 md:bg-[#F2ECE4] md:shadow-[5px_5px_0_#171717] lg:col-span-2 lg:flex lg:min-h-0 lg:flex-col lg:self-stretch">
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col md:block md:overflow-hidden md:rounded-2xl md:border-2 md:border-neutral-900 md:bg-[#F2ECE4] md:shadow-[5px_5px_0_#171717] lg:col-span-2 lg:flex lg:min-h-0 lg:flex-col lg:self-stretch">
             {/* Header: judul (desktop) + search + kategori */}
             <div className="flex items-center justify-between gap-3 md:px-6 md:pt-6">
-              <h2 className="hidden font-angka text-sm font-bold uppercase tracking-[0.2em] text-[#D62828] md:block">
-                Riwayat
-              </h2>
+              <div className="hidden shrink-0 md:block">
+                <h2 className="text-lg font-extrabold text-neutral-900">
+                  Riwayat
+                </h2>
+                <p className="mt-1 font-angka text-xs text-neutral-500">
+                  {pengeluaran.length} transaksi tercatat
+                </p>
+              </div>
               <div className="flex w-full items-center gap-3 md:w-auto">
                 <div className="min-w-0 flex-1">
                   <InputCari />
@@ -137,14 +112,17 @@ function Home() {
             {/* Garis (desktop) */}
             <div className="mx-6 mt-5 hidden border-t-2 border-neutral-900 md:block" />
 
-            {/* Tabel*/}
-            <div className="mt-4 rounded-2xl border-2 border-neutral-900 bg-[#F2ECE4] shadow-[5px_5px_0_#171717] md:mt-0 md:rounded-none md:border-0 md:bg-transparent md:shadow-none lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:scrollbar-none lg:[&::-webkit-scrollbar]:hidden">
-              <TableRiwayat
-                datas={pengeluaran}
-                loading={loading}
-                error={error}
-                onHapus={hapusPengeluaran}
-              />
+            {/* Wadah mobile: kartu sampai dekat bawah layar (tombol boleh menutupi). md+: display contents */}
+            <div className="flex min-h-0 flex-1 flex-col pb-10 md:contents">
+              {/* Tabel: kartu diam, isinya yang scroll (mobile & lg). pb-20: item terakhir tidak ketutup tombol */}
+              <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-2xl pb-20 md:pb-0 border-2 border-neutral-900 bg-[#F2ECE4] shadow-[5px_5px_0_#171717] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mt-0 md:overflow-visible md:rounded-none md:border-0 md:bg-transparent md:shadow-none lg:overflow-y-auto">
+                <TableRiwayat
+                  datas={pengeluaran}
+                  loading={loading}
+                  error={error}
+                  onHapus={hapusPengeluaran}
+                />
+              </div>
             </div>
           </div>
 
@@ -164,7 +142,7 @@ function Home() {
       </main>
 
       {/* Tombol tambah mobile */}
-      <div className="fixed inset-x-0 bottom-0 z-40 bg-linear-to-t from-[#FAF6F0] via-[#FAF6F0]/90 to-transparent px-4 pb-5 pt-6 md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-5 md:hidden">
         <button
           type="button"
           onClick={() => setBukaForm(true)}
