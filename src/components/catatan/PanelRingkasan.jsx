@@ -28,7 +28,8 @@ function PanelRingkasan({ pengeluaran }) {
         />
         <KartuRingkasan
           warna="kuning"
-          stiker="Hari ini"          label="total pengeluaran"
+          stiker="Hari ini"
+          label="total pengeluaran"
           nilai={ringkasan.totalHariIni}
           keterangan={`${ringkasan.transaksiHariIni} transaksi`}
         />
