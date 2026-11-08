@@ -3,6 +3,7 @@ import {
   ambilSemuaCatatan,
   tambahCatatan,
   hapusCatatan,
+  editCatatan,
 } from "@/api/catatan.js";
 import Header from "@/components/layouts/Header";
 import TableRiwayat from "@/components/catatan/TableRiwayat";
@@ -10,6 +11,7 @@ import PerKategori from "@/components/catatan/PerKategori";
 import InputCari from "@/components/ui/InputCari";
 import FilterKategori from "@/components/catatan/FilterKategori";
 import FormTambah from "@/components/catatan/FormTambah";
+import FormEdit from "@/components/catatan/FormEdit";
 import PanelRingkasan from "@/components/catatan/PanelRingkasan";
 import { Plus } from "lucide-react";
 
@@ -18,6 +20,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bukaForm, setBukaForm] = useState(false);
+  const [catatanTerpilih, setCatatanTerpilih] = useState(null);
 
   // Get
   useEffect(() => {
@@ -57,12 +60,21 @@ function Home() {
     }
   }
 
+  async function editPengeluaran(id, isiBaru) {
+    const catatanDiEdit = await editCatatan(id, isiBaru);
+    setPengeluaran((prev) =>
+      prev.map((catatan) =>
+        catatan.id === catatanDiEdit.id ? catatanDiEdit : catatan,
+      ),
+    );
+  }
+
   return (
     // Mobile & lg: tinggi dikunci 1 layar, hanya riwayat yang scroll. md: scroll normal
     <div className="flex h-dvh flex-col overflow-hidden bg-[#FAF6F0] md:block md:h-auto md:min-h-screen md:overflow-visible lg:flex lg:h-dvh lg:overflow-hidden">
       <Header onBukaForm={() => setBukaForm(true)} />
 
-      {/* Popup form tambah */}
+      {/* Popup form Tambah */}
       {bukaForm && (
         // Lapisan gelap
         <div
@@ -78,6 +90,30 @@ function Home() {
               onTambah={async (itemBaru) => {
                 await tambahPengeluaran(itemBaru);
                 setBukaForm(false); // tutup popup
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Popup form edit */}
+      {catatanTerpilih && (
+        // Lapisan gelap
+        <div
+          onClick={() => setCatatanTerpilih(null)} // ⬅️ tutup popup
+          className="fixed inset-0 z-50 flex animate-fade-masuk items-end justify-center bg-black/50 md:items-center md:overflow-y-auto md:p-4"
+        >
+          {/* klik form tidak menutup popup */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14 [&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
+          >
+            {/* FormEdit nanti */} {/* ⬅️ diisi di 7d */}
+            <FormEdit
+              catatan={catatanTerpilih}
+              onSimpan={async (id, isiBaru) => {
+                await editPengeluaran(id, isiBaru);
+                setCatatanTerpilih(null); // tutup popup
               }}
             />
           </div>
@@ -112,21 +148,22 @@ function Home() {
             {/* Garis (desktop) */}
             <div className="mx-6 mt-5 hidden border-t-2 border-neutral-900 md:block" />
 
-            {/* Wadah mobile: kartu sampai dekat bawah layar (tombol boleh menutupi). md+: display contents */}
+            {/* Wadah mobile: kartu sampai dekat bawah layar*/}
             <div className="flex min-h-0 flex-1 flex-col pb-10 md:contents">
-              {/* Tabel: kartu diam, isinya yang scroll (mobile & lg). pb-20: item terakhir tidak ketutup tombol */}
+              {/* Tabel*/}
               <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-2xl pb-20 md:pb-0 border-2 border-neutral-900 bg-[#F2ECE4] shadow-[5px_5px_0_#171717] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mt-0 md:overflow-visible md:rounded-none md:border-0 md:bg-transparent md:shadow-none lg:overflow-y-auto">
                 <TableRiwayat
                   datas={pengeluaran}
                   loading={loading}
                   error={error}
+                  onEdit={(catatan) => setCatatanTerpilih(catatan)}
                   onHapus={hapusPengeluaran}
                 />
               </div>
             </div>
           </div>
 
-          {/* Kanan:(desktop) */}
+          {/* Kanan:kategori (desktop) */}
           <div className="hidden min-w-0 md:block">
             <PerKategori pengeluaran={pengeluaran} />
           </div>

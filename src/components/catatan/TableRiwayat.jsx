@@ -1,8 +1,8 @@
 import { formatRupiah, formatTanggal } from "@/utils/format";
-import { Trash2 } from "lucide-react";
+import { Trash2, Pencil } from "lucide-react";
 import notebookLockup from "@/assets/icon/notebook-mark.svg";
 
-function TableRiwayat({ datas, onHapus, error, loading }) {
+function TableRiwayat({ datas, onHapus, onEdit, error, loading }) {
   if (loading)
     return (
       <div className="flex items-center justify-center px-6 py-24">
@@ -97,14 +97,25 @@ function TableRiwayat({ datas, onHapus, error, loading }) {
                   <p className="font-angka text-sm font-bold">
                     {formatRupiah.format(item.harga)}
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => onHapus(item.id)}
-                    aria-label={`Hapus ${item.nama}`}
-                    className="cursor-pointer rounded-md p-1 text-neutral-400 transition hover:bg-[#D62828]/10 hover:text-[#D62828]"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
+                  {/* Button */}
+                  <div className="flex gap-1 items-center">
+                    <button
+                      type="button"
+                      onClick={() => onEdit(item)}
+                      className="cursor-pointer rounded-md p-1 text-neutral-400 transition hover:bg-[#D62828]/10 hover:text-[#D62828]"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => onHapus(item.id)}
+                      aria-label={`Hapus ${item.nama}`}
+                      className="cursor-pointer rounded-md p-1 text-neutral-400 transition hover:bg-[#D62828]/10 hover:text-[#D62828]"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
