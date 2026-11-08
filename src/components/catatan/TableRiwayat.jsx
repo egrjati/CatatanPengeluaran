@@ -102,16 +102,16 @@ function TableRiwayat({ datas, onHapus, onEdit, error, loading }) {
                     <button
                       type="button"
                       onClick={() => onEdit(item)}
-                      className="cursor-pointer rounded-md p-1 text-neutral-400 transition hover:bg-[#D62828]/10 hover:text-[#D62828]"
+                      className="cursor-pointer rounded-md p-1 text-neutral-500 transition hover:bg-[#7B9CFF]/10 hover:text-[#5f87ff]"
                     >
-                      <Pencil className="h-4 w-4" />
+                      <Pencil className="h-4 w-4 " />
                     </button>
 
                     <button
                       type="button"
                       onClick={() => onHapus(item.id)}
                       aria-label={`Hapus ${item.nama}`}
-                      className="cursor-pointer rounded-md p-1 text-neutral-400 transition hover:bg-[#D62828]/10 hover:text-[#D62828]"
+                      className="cursor-pointer rounded-md p-1 text-neutral-500 transition hover:bg-[#D62828]/10 hover:text-[#D62828]"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
