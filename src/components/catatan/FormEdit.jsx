@@ -78,7 +78,7 @@ function FormEdit({ catatan, onSimpan }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#D62828] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
+      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#3B6FCC] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
     >
       {/* stiker miring di pojok */}
       <span className="absolute -top-4 left-5 -rotate-3 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-neutral-900 shadow-[2px_2px_0_#171717]">
