@@ -15,7 +15,7 @@ const gayaStiker = {
   putih: "bg-white text-neutral-900",
 };
 
-function KartuRingkasan({
+function SummaryCard({
   label,
   nilai,
   keterangan,
@@ -47,4 +47,4 @@ function KartuRingkasan({
     </div>
   );
 }
-export default KartuRingkasan;
+export default SummaryCard;

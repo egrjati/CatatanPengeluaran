@@ -1,6 +1,6 @@
 import { formatRupiah } from "@/utils/format";
 
-function RingkasanTotal({hasil}) {
+function TotalSummary({hasil}) {
   return (
     <div className=" border border-black/30 rounded-md p-4 space-y-1.5">
       <p className="uppercase text-sm tracking-wide">total pengeluaran</p>
@@ -8,4 +8,4 @@ function RingkasanTotal({hasil}) {
     </div>
   );
 }
-export default RingkasanTotal;
+export default TotalSummary;
