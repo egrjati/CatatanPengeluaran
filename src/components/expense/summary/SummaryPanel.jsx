@@ -1,16 +1,16 @@
-// src/components/catatan/PanelRingkasan.jsx
-import KartuRingkasan from "@/components/catatan/KartuRingkasan";
-import KartuRingkasanMobile from "@/components/catatan/KartuRingkasanMobile";
+// src/components/expense/summary/SummaryPanel.jsx
+import SummaryCard from "@/components/expense/summary/SummaryCard";
+import SummaryCardMobile from "@/components/expense/summary/SummaryCardMobile";
 import { hitungRingkasan } from "@/utils/ringkasan";
 
-function PanelRingkasan({ pengeluaran }) {
+function SummaryPanel({ pengeluaran }) {
   const ringkasan = hitungRingkasan(pengeluaran);
 
   return (
     <>
       {/* Ringkasan mobile */}
       <div className="pt-3 md:hidden">
-        <KartuRingkasanMobile
+        <SummaryCardMobile
           total={ringkasan.totalBulanIni}
           hariIni={ringkasan.totalHariIni}
           rataRata={ringkasan.rataRata}
@@ -19,21 +19,21 @@ function PanelRingkasan({ pengeluaran }) {
 
       {/* Ringkasan desktop */}
       <div className="hidden gap-5 pt-3 md:grid md:grid-cols-3">
-        <KartuRingkasan
+        <SummaryCard
           warna="merah"
           stiker="Bulan ini"
           label="total pengeluaran"
           nilai={ringkasan.totalBulanIni}
           keterangan={`${ringkasan.transaksiBulanIni} transaksi`}
         />
-        <KartuRingkasan
+        <SummaryCard
           warna="kuning"
           stiker="Hari ini"
           label="total pengeluaran"
           nilai={ringkasan.totalHariIni}
           keterangan={`${ringkasan.transaksiHariIni} transaksi`}
         />
-        <KartuRingkasan
+        <SummaryCard
           warna="putih"
           stiker="Rata-rata"
           label="per hari"
@@ -44,4 +44,4 @@ function PanelRingkasan({ pengeluaran }) {
     </>
   );
 }
-export default PanelRingkasan;
+export default SummaryPanel;

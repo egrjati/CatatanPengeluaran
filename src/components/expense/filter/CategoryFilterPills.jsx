@@ -1,7 +1,7 @@
 import { daftarKategori } from "@/data/kategori";
 
 // aktif = kategori terpilih
-function FilterKategoriPil({ aktif = "Semua" }) {
+function CategoryFilterPills({ aktif = "Semua" }) {
   const semuaPilihan = ["Semua", ...daftarKategori];
 
   return (
@@ -23,4 +23,4 @@ function FilterKategoriPil({ aktif = "Semua" }) {
     </div>
   );
 }
-export default FilterKategoriPil;
+export default CategoryFilterPills;

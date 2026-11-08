@@ -3,11 +3,11 @@ import { keTanggalLokal } from "@/utils/tanggal";
 import { ArrowUpRight, CalendarFold, TriangleAlert } from "lucide-react";
 import { daftarKategori } from "@/data/kategori";
 
-function FormTambah({ onTambah }) {
-  const [nama, setNama] = useState("");
-  const [harga, setHarga] = useState("");
-  const [kategori, setKategori] = useState(daftarKategori[0]);
-  const [tanggal, setTanggal] = useState(keTanggalLokal(new Date()));
+function EditExpenseForm({ catatan, onSimpan }) {
+  const [nama, setNama] = useState(catatan.nama);
+  const [harga, setHarga] = useState(catatan.harga);
+  const [kategori, setKategori] = useState(catatan.kategori);
+  const [tanggal, setTanggal] = useState(catatan.tanggal);
   const [error, setError] = useState({});
 
   const objKemarin = new Date();
@@ -46,7 +46,6 @@ function FormTambah({ onTambah }) {
       setError({ harga: "Format wajib bilangan bulat" });
       return;
     }
-
     if (hargaAngka > 2147483647) {
       setError({ harga: "Harga Terlalu banyak" });
       return;
@@ -59,7 +58,7 @@ function FormTambah({ onTambah }) {
     }
 
     // objek
-    const itemBaru = {
+    const isiBaru = {
       nama: nama,
       harga: hargaAngka,
       kategori: kategori,
@@ -67,13 +66,7 @@ function FormTambah({ onTambah }) {
     };
 
     try {
-      await onTambah(itemBaru);
-      // Kosongkan lagi
-      setNama("");
-      setHarga("");
-      setKategori(daftarKategori[0]);
-      setTanggal(hariIni);
-      setError({});
+      await onSimpan(catatan.id, isiBaru);
     } catch (err) {
       setError({ server: err.message });
     }
@@ -85,16 +78,16 @@ function FormTambah({ onTambah }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#D62828] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
+      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#3B6FCC] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
     >
       {/* stiker miring di pojok */}
       <span className="absolute -top-4 left-5 -rotate-3 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-neutral-900 shadow-[2px_2px_0_#171717]">
-        ✍️ Beli apa aja hari ini?
+        ✏️ Ada yang salah catat?
       </span>
 
       {/* Nama form */}
       <h2 className="text-2xl lg:text-3xl text-center font-extrabold text-[#F2ECE4]">
-        Catat Pengeluaran
+        Edit Catatan
       </h2>
 
       {/* Input Nama */}
@@ -143,7 +136,7 @@ function FormTambah({ onTambah }) {
           Kapan?
         </span>
         <div className="mt-1.5 flex flex-wrap items-center gap-2">
-          {/* Hariini */}
+          {/* Hari ini */}
           <button
             onClick={() => {
               setTanggal(hariIni);
@@ -210,12 +203,12 @@ function FormTambah({ onTambah }) {
         </select>
       </label>
 
-      {/* Button tambah */}
+      {/* Button simpan */}
       <button
         type="submit"
         className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-neutral-900 bg-[#FFE14D] py-3.5 text-base font-extrabold uppercase tracking-wide text-neutral-900 shadow-[4px_4px_0_#171717] transition hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-none"
       >
-        Gas, Catat!
+        Simpan
         <ArrowUpRight className="h-5 w-5" strokeWidth={3} />
       </button>
 
@@ -232,4 +225,4 @@ function FormTambah({ onTambah }) {
     </form>
   );
 }
-export default FormTambah;
+export default EditExpenseForm;

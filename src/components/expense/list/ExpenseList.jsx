@@ -2,7 +2,7 @@ import { formatRupiah, formatTanggal } from "@/utils/format";
 import { Trash2, Pencil } from "lucide-react";
 import notebookLockup from "@/assets/icon/notebook-mark.svg";
 
-function TableRiwayat({ datas, onHapus, onEdit, error, loading }) {
+function ExpenseList({ datas, onHapus, onEdit, error, loading }) {
   if (loading)
     return (
       <div className="flex items-center justify-center px-6 py-24">
@@ -125,4 +125,4 @@ function TableRiwayat({ datas, onHapus, onEdit, error, loading }) {
     </div>
   );
 }
-export default TableRiwayat;
+export default ExpenseList;

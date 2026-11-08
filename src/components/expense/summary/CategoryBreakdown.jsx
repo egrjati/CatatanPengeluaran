@@ -3,7 +3,7 @@ import { warnaKategori } from "@/data/warnaKategori";
 import { hitungPerKategori } from "@/utils/ringkasan";
 
 // datas = [{ kategori: "Transport", total: 40000, persen: 46 }, ...]
-function PerKategori({ pengeluaran }) {
+function CategoryBreakdown({ pengeluaran }) {
   const daftarTotal = hitungPerKategori(pengeluaran);
 
   return (
@@ -48,4 +48,4 @@ function PerKategori({ pengeluaran }) {
     </div>
   );
 }
-export default PerKategori;
+export default CategoryBreakdown;

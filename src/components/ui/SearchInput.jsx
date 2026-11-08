@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
 
-function InputCari({ value, onChange, placeholder = "cari transaksi..." }) {
+function SearchInput({ value, onChange, placeholder = "cari transaksi..." }) {
   return (
     <div className="relative w-full transition focus-within:-translate-y-0.5 md:w-64">
       <Search
@@ -18,4 +18,4 @@ function InputCari({ value, onChange, placeholder = "cari transaksi..." }) {
     </div>
   );
 }
-export default InputCari;
+export default SearchInput;
