@@ -1,6 +1,7 @@
 import { formatRupiah } from "@/utils/format";
 import { warnaKategori } from "@/data/warnaKategori";
 import { hitungPerKategori } from "@/utils/ringkasan";
+import { Plus } from "lucide-react";
 
 // datas = [{ kategori: "Transport", total: 40000, persen: 46 }, ...]
 function CategoryBreakdown({ pengeluaran }) {
@@ -9,10 +10,25 @@ function CategoryBreakdown({ pengeluaran }) {
   return (
     <div className="rounded-2xl border-2 border-neutral-900 bg-white p-5 shadow-[5px_5px_0_#171717]">
       {/* Judul */}
-      <h2 className="text-lg font-extrabold text-neutral-900">Per kategori</h2>
-      <p className="mt-1 font-angka text-xs text-neutral-500">
-        klik untuk filter riwayat
-      </p>
+      <div>
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-lg font-extrabold text-neutral-900">
+            Per Kategori
+          </h2>
+
+          <button
+            type="button"
+            aria-label="Tambah kategori"
+            className="flex shrink-0 cursor-pointer items-center gap-1 rounded-lg border-2 border-neutral-900 bg-[#F2ECE4] px-2 py-0.5 text-[11px] font-bold text-neutral-900 shadow-[2px_2px_0_#171717] transition hover:-translate-y-0.5 hover:bg-[#FFE14D] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+          >
+            <Plus className="h-3 w-3" strokeWidth={3} />
+            Kategori
+          </button>
+        </div>
+        <p className="mt-0.5 text-xs font-medium text-neutral-500">
+          Klik untuk filter riwayat
+        </p>
+      </div>
 
       {/* Daftar kategori */}
       <div className="mt-5 space-y-4">
