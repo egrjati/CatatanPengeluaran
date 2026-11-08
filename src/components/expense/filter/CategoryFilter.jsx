@@ -1,8 +1,8 @@
 import { ChevronDown } from "lucide-react";
 import { daftarKategori } from "@/data/kategori";
 
-// Dropdown kategori, gaya sama dengan InputCari
-function FilterKategori({ value, onChange }) {
+// Dropdown kategori, gaya sama dengan SearchInput
+function CategoryFilter({ value, onChange }) {
   const semuaPilihan = ["Semua", ...daftarKategori];
 
   return (
@@ -28,4 +28,4 @@ function FilterKategori({ value, onChange }) {
     </div>
   );
 }
-export default FilterKategori;
+export default CategoryFilter;

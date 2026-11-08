@@ -1,7 +1,7 @@
 import { formatRupiah } from "@/utils/format";
 
 // Ringkasan versi mobile
-function KartuRingkasanMobile({ total, hariIni, rataRata }) {
+function SummaryCardMobile({ total, hariIni, rataRata }) {
   return (
     <div className="relative rounded-2xl border-2 border-neutral-900 bg-[#D62828] px-5 pb-5 pt-7 shadow-[5px_5px_0_#171717]">
       {/* Stiker miring */}
@@ -33,4 +33,4 @@ function KartuRingkasanMobile({ total, hariIni, rataRata }) {
     </div>
   );
 }
-export default KartuRingkasanMobile;
+export default SummaryCardMobile;

@@ -6,13 +6,13 @@ import {
   editCatatan,
 } from "@/api/catatan.js";
 import Header from "@/components/layouts/Header";
-import TableRiwayat from "@/components/catatan/TableRiwayat";
-import PerKategori from "@/components/catatan/PerKategori";
-import InputCari from "@/components/ui/InputCari";
-import FilterKategori from "@/components/catatan/FilterKategori";
-import FormTambah from "@/components/catatan/FormTambah";
-import FormEdit from "@/components/catatan/FormEdit";
-import PanelRingkasan from "@/components/catatan/PanelRingkasan";
+import ExpenseList from "@/components/expense/list/ExpenseList";
+import CategoryBreakdown from "@/components/expense/summary/CategoryBreakdown";
+import SearchInput from "@/components/ui/SearchInput";
+import CategoryFilter from "@/components/expense/filter/CategoryFilter";
+import AddExpenseForm from "@/components/expense/form/AddExpenseForm";
+import EditExpenseForm from "@/components/expense/form/EditExpenseForm";
+import SummaryPanel from "@/components/expense/summary/SummaryPanel";
 import { Plus } from "lucide-react";
 
 function Home() {
@@ -86,7 +86,7 @@ function Home() {
             onClick={(e) => e.stopPropagation()}
             className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14[&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
           >
-            <FormTambah
+            <AddExpenseForm
               onTambah={async (itemBaru) => {
                 await tambahPengeluaran(itemBaru);
                 setBukaForm(false); // tutup popup
@@ -108,8 +108,8 @@ function Home() {
             onClick={(e) => e.stopPropagation()}
             className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14 [&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
           >
-            {/* FormEdit nanti */} {/* ⬅️ diisi di 7d */}
-            <FormEdit
+            {/* EditExpenseForm nanti */} {/* ⬅️ diisi di 7d */}
+            <EditExpenseForm
               catatan={catatanTerpilih}
               onSimpan={async (id, isiBaru) => {
                 await editPengeluaran(id, isiBaru);
@@ -122,7 +122,7 @@ function Home() {
 
       <main className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col px-4 pt-4 md:block md:py-3 lg:flex">
         {/* Ringkasan */}
-        <PanelRingkasan pengeluaran={pengeluaran} />
+        <SummaryPanel pengeluaran={pengeluaran} />
 
         <div className="mt-7 flex min-h-0 flex-1 flex-col md:grid md:items-start md:gap-5 lg:min-h-0 lg:flex-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)]">
           {/* Histori*/}
@@ -139,9 +139,9 @@ function Home() {
               </div>
               <div className="flex w-full items-center gap-3 md:w-auto">
                 <div className="min-w-0 flex-1">
-                  <InputCari />
+                  <SearchInput />
                 </div>
-                <FilterKategori />
+                <CategoryFilter />
               </div>
             </div>
 
@@ -152,7 +152,7 @@ function Home() {
             <div className="flex min-h-0 flex-1 flex-col pb-10 md:contents">
               {/* Tabel*/}
               <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-2xl pb-20 md:pb-0 border-2 border-neutral-900 bg-[#F2ECE4] shadow-[5px_5px_0_#171717] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mt-0 md:overflow-visible md:rounded-none md:border-0 md:bg-transparent md:shadow-none lg:overflow-y-auto">
-                <TableRiwayat
+                <ExpenseList
                   datas={pengeluaran}
                   loading={loading}
                   error={error}
@@ -165,7 +165,7 @@ function Home() {
 
           {/* Kanan:kategori (desktop) */}
           <div className="hidden min-w-0 md:block">
-            <PerKategori pengeluaran={pengeluaran} />
+            <CategoryBreakdown pengeluaran={pengeluaran} />
           </div>
         </div>
       </main>
