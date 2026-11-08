@@ -28,3 +28,15 @@ export async function hapusCatatan(id) {
   if (!respon.ok) throw new Error(isiBalasan.pesan);
   return isiBalasan;
 }
+
+export async function editCatatan(id, data) {
+  const respon = await fetch(`${BASE_URL}/pengeluaran/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  const isiBalasan = await respon.json();
+
+  if (!respon.ok) throw new Error(isiBalasan.pesan);
+  return isiBalasan;
+}
