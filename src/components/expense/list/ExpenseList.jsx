@@ -88,7 +88,7 @@ function ExpenseList({ datas, onHapus, onEdit, error, loading }) {
                     {item.nama}
                   </p>
                   <span className="mt-1 inline-block rounded-full border-2 border-neutral-900 bg-white px-2 py-0.5 font-angka text-[10px] font-bold uppercase tracking-wider">
-                    {item.kategori}
+                    {item.kategori.nama}
                   </span>
                 </div>
 
