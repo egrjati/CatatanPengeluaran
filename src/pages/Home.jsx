@@ -5,6 +5,7 @@ import {
   hapusCatatan,
   editCatatan,
 } from "@/api/catatan.js";
+import { tarikSemuaCategory } from "@/api/category.js";
 import Header from "@/components/layouts/Header";
 import ExpenseList from "@/components/expense/list/ExpenseList";
 import CategoryBreakdown from "@/components/expense/summary/CategoryBreakdown";
@@ -17,11 +18,13 @@ import { Plus } from "lucide-react";
 
 function Home() {
   const [pengeluaran, setPengeluaran] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bukaForm, setBukaForm] = useState(false);
   const [catatanTerpilih, setCatatanTerpilih] = useState(null);
 
+  // CRUD Pengeluaran
   // Get
   useEffect(() => {
     async function muatCatatan() {
@@ -69,6 +72,21 @@ function Home() {
     );
   }
 
+  // CRUD Category
+  // Get
+  useEffect(() => {
+    async function muatCategory() {
+      try {
+        const dataCategory = await tarikSemuaCategory();
+        setCategories(dataCategory);
+        console.log(dataCategory);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    muatCategory();
+  }, []);
+
   return (
     // Mobile & lg: tinggi dikunci 1 layar, hanya riwayat yang scroll. md: scroll normal
     <div className="flex h-dvh flex-col overflow-hidden bg-[#FAF6F0] md:block md:h-auto md:min-h-screen md:overflow-visible lg:flex lg:h-dvh lg:overflow-hidden">
@@ -84,9 +102,10 @@ function Home() {
           {/* klik form tidak menutup popup */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14[&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
+            className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14 [&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
           >
             <AddExpenseForm
+              categories={categories}
               onTambah={async (itemBaru) => {
                 await tambahPengeluaran(itemBaru);
                 setBukaForm(false); // tutup popup
@@ -125,7 +144,7 @@ function Home() {
         <SummaryPanel pengeluaran={pengeluaran} />
 
         <div className="mt-7 flex min-h-0 flex-1 flex-col md:grid md:items-start md:gap-5 lg:min-h-0 lg:flex-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)]">
-          {/* Histori*/}
+          {/* Table*/}
           <div className="flex min-h-0 min-w-0 flex-1 flex-col md:block md:overflow-hidden md:rounded-2xl md:border-2 md:border-neutral-900 md:bg-[#F2ECE4] md:shadow-[5px_5px_0_#171717] lg:col-span-2 lg:flex lg:min-h-0 lg:flex-col lg:self-stretch">
             {/* Header: judul (desktop) + search + kategori */}
             <div className="flex items-center justify-between gap-3 md:px-6 md:pt-6">
