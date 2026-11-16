@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { keTanggalLokal } from "@/utils/tanggal";
 import { ArrowUpRight, CalendarFold, TriangleAlert } from "lucide-react";
-import { daftarKategori } from "@/data/kategori";
 
-function AddExpenseForm({ onTambah }) {
+function AddExpenseForm({ onTambah, categories }) {
   const [nama, setNama] = useState("");
   const [harga, setHarga] = useState("");
-  const [kategori, setKategori] = useState(daftarKategori[0]);
+  const [kategoriId, setKategoriId] = useState("");
   const [tanggal, setTanggal] = useState(keTanggalLokal(new Date()));
   const [error, setError] = useState({});
 
@@ -58,11 +57,17 @@ function AddExpenseForm({ onTambah }) {
       return;
     }
 
+    // kategori
+    if (kategoriId === "") {
+      setError({ kategoriId: "Pilih Kategori" });
+      return;
+    }
+
     // objek
     const itemBaru = {
       nama: nama,
       harga: hargaAngka,
-      kategori: kategori,
+      kategoriId: kategoriId,
       tanggal: tanggal,
     };
 
@@ -71,7 +76,7 @@ function AddExpenseForm({ onTambah }) {
       // Kosongkan lagi
       setNama("");
       setHarga("");
-      setKategori(daftarKategori[0]);
+      setKategoriId("");
       setTanggal(hariIni);
       setError({});
     } catch (err) {
@@ -198,13 +203,19 @@ function AddExpenseForm({ onTambah }) {
           Kategori
         </span>
         <select
-          value={kategori}
-          onChange={(e) => setKategori(e.target.value)}
+          value={kategoriId}
+          onChange={(e) => {
+            setKategoriId(e.target.value);
+            setError((prev) => ({ ...prev, kategoriId: "" }));
+          }}
           className="mt-1.5 w-full cursor-pointer rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717]"
         >
-          {daftarKategori.map((k) => (
-            <option key={k} value={k}>
-              {k}
+          {/* Isi awal kosong, sebelum dipilih */}
+          <option value=""> Pilih categori</option>,
+          {categories.map((kategori) => (
+            // Opsi kategori dari API
+            <option key={kategori.id} value={kategori.id}>
+              {kategori.nama}
             </option>
           ))}
         </select>
