@@ -119,7 +119,7 @@ function Home() {
       {catatanTerpilih && (
         // Lapisan gelap
         <div
-          onClick={() => setCatatanTerpilih(null)} // ⬅️ tutup popup
+          onClick={() => setCatatanTerpilih(null)} // ⬅ tutup popup
           className="fixed inset-0 z-50 flex animate-fade-masuk items-end justify-center bg-black/50 md:items-center md:overflow-y-auto md:p-4"
         >
           {/* klik form tidak menutup popup */}
@@ -127,8 +127,9 @@ function Home() {
             onClick={(e) => e.stopPropagation()}
             className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14 [&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
           >
-            {/* EditExpenseForm nanti */} {/* ⬅️ diisi di 7d */}
+            {/* EditExpenseForm */}
             <EditExpenseForm
+              categories={categories}
               catatan={catatanTerpilih}
               onSimpan={async (id, isiBaru) => {
                 await editPengeluaran(id, isiBaru);
