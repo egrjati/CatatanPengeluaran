@@ -173,6 +173,7 @@ function Home() {
               {/* Tabel*/}
               <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-2xl pb-20 md:pb-0 border-2 border-neutral-900 bg-[#F2ECE4] shadow-[5px_5px_0_#171717] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mt-0 md:overflow-visible md:rounded-none md:border-0 md:bg-transparent md:shadow-none lg:overflow-y-auto">
                 <ExpenseList
+                  categories={categories}
                   datas={pengeluaran}
                   loading={loading}
                   error={error}
