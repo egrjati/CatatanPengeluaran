@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { keTanggalLokal } from "@/utils/tanggal";
 import { ArrowUpRight, CalendarFold, TriangleAlert } from "lucide-react";
-import { daftarKategori } from "@/data/kategori";
 
-function EditExpenseForm({ catatan, onSimpan }) {
+function EditExpenseForm({ catatan, onSimpan, categories }) {
   const [nama, setNama] = useState(catatan.nama);
   const [harga, setHarga] = useState(catatan.harga);
-  const [kategori, setKategori] = useState(catatan.kategori);
+  const [kategoriId, setKategoriId] = useState("");
   const [tanggal, setTanggal] = useState(catatan.tanggal);
   const [error, setError] = useState({});
 
@@ -57,11 +56,17 @@ function EditExpenseForm({ catatan, onSimpan }) {
       return;
     }
 
+    // Kategori
+    if (kategoriId === "") {
+      setError({ kategoriId: "Kategori tidak boleh kosong" });
+      return;
+    }
+
     // objek
     const isiBaru = {
       nama: nama,
       harga: hargaAngka,
-      kategori: kategori,
+      kategoriId: kategoriId,
       tanggal: tanggal,
     };
 
@@ -191,13 +196,17 @@ function EditExpenseForm({ catatan, onSimpan }) {
           Kategori
         </span>
         <select
-          value={kategori}
-          onChange={(e) => setKategori(e.target.value)}
+          value={kategoriId}
+          onChange={(e) => {
+            setKategoriId(e.target.value);
+            setError((prev) => ({ ...prev, tanggal: " " }));
+          }}
           className="mt-1.5 w-full cursor-pointer rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717]"
         >
-          {daftarKategori.map((k) => (
-            <option key={k} value={k}>
-              {k}
+          <option value="">Pilih Kategori</option>
+          {categories.map((kategori) => (
+            <option key={kategori.id} value={kategori.id}>
+              {kategori.nama}
             </option>
           ))}
         </select>
