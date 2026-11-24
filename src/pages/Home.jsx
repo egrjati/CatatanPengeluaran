@@ -142,7 +142,7 @@ function Home() {
 
       <main className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col px-4 pt-4 md:block md:py-3 lg:flex">
         {/* Ringkasan */}
-        <SummaryPanel pengeluaran={pengeluaran} />
+        <SummaryPanel pengeluaran={pengeluaran} categories={categories} />
 
         <div className="mt-7 flex min-h-0 flex-1 flex-col md:grid md:items-start md:gap-5 lg:min-h-0 lg:flex-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)]">
           {/* Table*/}
@@ -186,7 +186,10 @@ function Home() {
 
           {/* Kanan:kategori (desktop) */}
           <div className="hidden min-w-0 md:block">
-            <CategoryBreakdown pengeluaran={pengeluaran} />
+            <CategoryBreakdown
+              pengeluaran={pengeluaran}
+              categories={categories}
+            />
           </div>
         </div>
       </main>

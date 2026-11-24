@@ -1,11 +1,11 @@
 import { formatRupiah } from "@/utils/format";
-import { warnaKategori } from "@/data/warnaKategori";
 import { hitungPerKategori } from "@/utils/ringkasan";
 import { Plus } from "lucide-react";
 
 // datas = [{ kategori: "Transport", total: 40000, persen: 46 }, ...]
-function CategoryBreakdown({ pengeluaran }) {
-  const daftarTotal = hitungPerKategori(pengeluaran);
+function CategoryBreakdown({ pengeluaran, categories }) {
+  const daftarTotal = hitungPerKategori(pengeluaran, categories);
+  console.log(daftarTotal);
 
   return (
     <div className="rounded-2xl border-2 border-neutral-900 bg-white p-5 shadow-[5px_5px_0_#171717]">
@@ -34,15 +34,13 @@ function CategoryBreakdown({ pengeluaran }) {
       <div className="mt-5 space-y-4">
         {daftarTotal.map((item) => (
           <button
-            key={item.kategori}
+            key={item.id}
             type="button"
             className="block w-full cursor-pointer text-left transition hover:-translate-y-0.5"
           >
             {/* Nama + persen + nominal */}
             <div className="flex items-end justify-between gap-2">
-              <p className="text-sm font-bold text-neutral-900">
-                {item.kategori}
-              </p>
+              <p className="text-sm font-bold text-neutral-900">{item.nama}</p>
               <p className="font-angka text-xs text-neutral-500">
                 {item.persen}%{" "}
                 <span className="font-bold text-neutral-900">
@@ -54,8 +52,11 @@ function CategoryBreakdown({ pengeluaran }) {
             {/* Progress bar */}
             <div className="mt-1.5 h-3 w-full overflow-hidden rounded-full border-2 border-neutral-900 bg-[#F2ECE4]">
               <div
-                className={`h-full border-r-2 border-neutral-900 ${warnaKategori[item.kategori] ?? "bg-neutral-400"}`}
-                style={{ width: `${item.persen}%` }}
+                className={`h-full border-r-2 border-neutral-900`}
+                style={{
+                  width: `${item.persen}%`,
+                  backgroundColor: `${item.warna}`,
+                }}
               />
             </div>
           </button>

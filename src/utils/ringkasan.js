@@ -3,9 +3,8 @@
 // harga = field db
 
 import { keTanggalLokal } from "@/utils/tanggal";
-import { daftarKategori } from "@/data/kategori";
 
-// Fungsi bantuan internal untuk catatan bulan ini saja
+// Fungsi bantuan internal untuk catatan bulan ini
 function ambilCatatanBulanIni(pengeluaran) {
   const hariIni = keTanggalLokal(new Date());
   const bulanIni = hariIni.slice(0, 7);
@@ -54,12 +53,12 @@ export function hitungRingkasan(pengeluaran) {
 }
 
 // Summary Kategori
-export function hitungPerKategori(pengeluaran) {
+export function hitungPerKategori(pengeluaran, categories) {
   const catatanBulanIni = ambilCatatanBulanIni(pengeluaran);
   const totalPerKategori = catatanBulanIni.reduce((toples, catatan) => {
     //hitung per toples kategori
-    const isiLama = toples[catatan.kategori] ?? 0;
-    toples[catatan.kategori] = isiLama + catatan.harga;
+    const isiLama = toples[catatan.kategoriId] ?? 0;
+    toples[catatan.kategoriId] = isiLama + catatan.harga;
     return toples;
   }, {});
 
@@ -70,14 +69,19 @@ export function hitungPerKategori(pengeluaran) {
   );
 
   // Ubah toples jadi daftar semua kategori
-  const daftarTotal = daftarKategori.map((kategori) => {
-    // ambil total dari toples (0 kalau belum ada transaksi)
-    const total = totalPerKategori[kategori] ?? 0;
-    // Persen
+  const daftarTotal = categories.map((kategori) => {
+    const total = totalPerKategori[kategori.id] ?? 0;
+    //%
     const persen =
       totalSemua === 0 ? 0 : Math.round((total / totalSemua) * 100);
 
-    return { kategori, total, persen };
+    return {
+      id: kategori.id,
+      nama: kategori.nama,
+      warna: kategori.warna,
+      total,
+      persen,
+    };
   });
 
   return daftarTotal.sort((a, b) => b.total - a.total);
