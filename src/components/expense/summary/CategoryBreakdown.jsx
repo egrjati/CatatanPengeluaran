@@ -3,7 +3,7 @@ import { hitungPerKategori } from "@/utils/ringkasan";
 import { Plus } from "lucide-react";
 
 // datas = [{ kategori: "Transport", total: 40000, persen: 46 }, ...]
-function CategoryBreakdown({ pengeluaran, categories, categoryBaru }) {
+function CategoryBreakdown({ pengeluaran, categories, onBukaForm }) {
   const daftarTotal = hitungPerKategori(pengeluaran, categories);
   console.log(daftarTotal);
 
@@ -17,6 +17,7 @@ function CategoryBreakdown({ pengeluaran, categories, categoryBaru }) {
           </h2>
 
           <button
+            onClick={onBukaForm}
             type="button"
             aria-label="Tambah kategori"
             className="flex shrink-0 cursor-pointer items-center gap-1 rounded-lg border-2 border-neutral-900 bg-[#F2ECE4] px-2 py-0.5 text-[11px] font-bold text-neutral-900 shadow-[2px_2px_0_#171717] transition hover:-translate-y-0.5 hover:bg-[#FFE14D] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"

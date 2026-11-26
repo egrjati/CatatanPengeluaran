@@ -23,6 +23,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bukaForm, setBukaForm] = useState(false);
+  const [bukaFormKategori, setBukaFormKategori] = useState(false);
   const [catatanTerpilih, setCatatanTerpilih] = useState(null);
 
   // CRUD Pengeluaran
@@ -43,12 +44,12 @@ function Home() {
 
   // Kunci scroll saat popup buka
   useEffect(() => {
-    if (!bukaForm) return;
+    if (!bukaForm && !bukaFormKategori) return;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = ""; // buka kunci
     };
-  }, [bukaForm]);
+  }, [bukaForm, bukaFormKategori]);
 
   async function tambahPengeluaran(itemBaru) {
     const catatanBaru = await tambahCatatan(itemBaru);
@@ -147,10 +148,10 @@ function Home() {
       )}
 
       {/* Popup tambah category */}
-      {bukaForm && (
+      {bukaFormKategori && (
         // Lapisan gelap
         <div
-          onClick={() => setBukaForm(false)}
+          onClick={() => setBukaFormKategori(false)}
           className="fixed inset-0 z-50 flex animate-fade-masuk items-end justify-center bg-black/50 md:items-center md:overflow-y-auto md:p-4"
         >
           {/* klik form tidak menutup popup */}
@@ -161,8 +162,8 @@ function Home() {
             <AddCategory
               categories={categories}
               onTambah={async (itemBaru) => {
-                await tambahPengeluaran(itemBaru);
-                setBukaForm(false); // tutup popup
+                await tambahCategory(itemBaru);
+                setBukaFormKategori(false); // tutup popup
               }}
             />
           </div>
@@ -216,6 +217,7 @@ function Home() {
           {/* Kanan:kategori (desktop) */}
           <div className="hidden min-w-0 md:block">
             <CategoryBreakdown
+              onBukaForm={() => setBukaFormKategori(true)}
               pengeluaran={pengeluaran}
               categories={categories}
               tambahKategory={tambahKategory}
