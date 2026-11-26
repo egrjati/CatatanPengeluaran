@@ -3,7 +3,7 @@ import { hitungPerKategori } from "@/utils/ringkasan";
 import { Plus } from "lucide-react";
 
 // datas = [{ kategori: "Transport", total: 40000, persen: 46 }, ...]
-function CategoryBreakdown({ pengeluaran, categories }) {
+function CategoryBreakdown({ pengeluaran, categories, categoryBaru }) {
   const daftarTotal = hitungPerKategori(pengeluaran, categories);
   console.log(daftarTotal);
 
@@ -40,7 +40,9 @@ function CategoryBreakdown({ pengeluaran, categories }) {
           >
             {/* Nama + persen + nominal */}
             <div className="flex items-end justify-between gap-2">
-              <p className="text-sm font-bold text-neutral-900">{item.nama}</p>
+              <p className="text-sm font-bold text-neutral-900">
+                {item.namaCategory}
+              </p>
               <p className="font-angka text-xs text-neutral-500">
                 {item.persen}%{" "}
                 <span className="font-bold text-neutral-900">

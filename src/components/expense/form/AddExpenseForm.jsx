@@ -84,7 +84,7 @@ function AddExpenseForm({ onTambah, categories }) {
     }
   }
 
-  // Validasi pakai early return
+  // error objek
   const pesanError = Object.values(error)[0];
 
   return (
@@ -110,7 +110,7 @@ function AddExpenseForm({ onTambah, categories }) {
         <input
           type="text"
           value={nama}
-          placeholder="Contoh : Kopi Americano"
+          placeholder="Kopi Americano"
           onChange={(e) => {
             setNama(e.target.value);
             setError((prev) => ({ ...prev, nama: "" }));
@@ -213,9 +213,8 @@ function AddExpenseForm({ onTambah, categories }) {
           {/* Isi awal kosong, sebelum dipilih */}
           <option value=""> Pilih categori</option>,
           {categories.map((kategori) => (
-            // Opsi kategori dari API
             <option key={kategori.id} value={kategori.id}>
-              {kategori.nama}
+              {kategori.namaCategory}
             </option>
           ))}
         </select>

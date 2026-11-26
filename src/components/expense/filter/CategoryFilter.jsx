@@ -1,10 +1,7 @@
 import { ChevronDown } from "lucide-react";
-import { daftarKategori } from "@/data/kategori";
 
 // Dropdown kategori, gaya sama dengan SearchInput
-function CategoryFilter({ value, onChange }) {
-  const semuaPilihan = ["Semua", ...daftarKategori];
-
+function CategoryFilter({ value, onChange, categories }) {
   return (
     <div className="relative shrink-0">
       <select
@@ -13,9 +10,10 @@ function CategoryFilter({ value, onChange }) {
         aria-label="Filter kategori"
         className="cursor-pointer appearance-none rounded-xl border-2 border-neutral-900 bg-white py-2 pl-3 pr-9 font-angka text-xs font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717]"
       >
-        {semuaPilihan.map((k) => (
-          <option key={k} value={k}>
-            {k}
+        <option value="">Kategori</option>
+        {categories.map((kategori) => (
+          <option key={kategori.id} value={kategori.id}>
+            {kategori.namaCategory}
           </option>
         ))}
       </select>
