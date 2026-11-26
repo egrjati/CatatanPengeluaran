@@ -199,14 +199,14 @@ function EditExpenseForm({ catatan, onSimpan, categories }) {
           value={kategoriId}
           onChange={(e) => {
             setKategoriId(e.target.value);
-            setError((prev) => ({ ...prev, tanggal: " " }));
+            setError((prev) => ({ ...prev, kategoriId: " " }));
           }}
           className="mt-1.5 w-full cursor-pointer rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717]"
         >
           <option value="">Pilih Kategori</option>
           {categories.map((kategori) => (
             <option key={kategori.id} value={kategori.id}>
-              {kategori.nama}
+              {kategori.namaCategory}
             </option>
           ))}
         </select>

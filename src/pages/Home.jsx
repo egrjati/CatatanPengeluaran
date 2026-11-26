@@ -5,13 +5,14 @@ import {
   hapusCatatan,
   editCatatan,
 } from "@/api/catatan.js";
-import { tarikSemuaCategory } from "@/api/category.js";
+import { tarikSemuaCategory, tambahCategory } from "@/api/category.js";
 import Header from "@/components/layouts/Header";
 import ExpenseList from "@/components/expense/list/ExpenseList";
 import CategoryBreakdown from "@/components/expense/summary/CategoryBreakdown";
 import SearchInput from "@/components/ui/SearchInput";
 import CategoryFilter from "@/components/expense/filter/CategoryFilter";
 import AddExpenseForm from "@/components/expense/form/AddExpenseForm";
+import AddCategory from "@/components/category/form/AddCategoryForm";
 import EditExpenseForm from "@/components/expense/form/EditExpenseForm";
 import SummaryPanel from "@/components/expense/summary/SummaryPanel";
 import { Plus } from "lucide-react";
@@ -87,12 +88,17 @@ function Home() {
     muatCategory();
   }, []);
 
+  async function tambahKategory(itemBaru) {
+    const kategori = await tambahCategory(itemBaru);
+    setCategories((prev) => [kategori, ...prev]);
+  }
+
   return (
     // Mobile & lg: tinggi dikunci 1 layar, hanya riwayat yang scroll. md: scroll normal
     <div className="flex h-dvh flex-col overflow-hidden bg-[#FAF6F0] md:block md:h-auto md:min-h-screen md:overflow-visible lg:flex lg:h-dvh lg:overflow-hidden">
       <Header onBukaForm={() => setBukaForm(true)} />
 
-      {/* Popup form Tambah */}
+      {/* Popup form Tambah Catatan */}
       {bukaForm && (
         // Lapisan gelap
         <div
@@ -140,9 +146,32 @@ function Home() {
         </div>
       )}
 
+      {/* Popup tambah category */}
+      {bukaForm && (
+        // Lapisan gelap
+        <div
+          onClick={() => setBukaForm(false)}
+          className="fixed inset-0 z-50 flex animate-fade-masuk items-end justify-center bg-black/50 md:items-center md:overflow-y-auto md:p-4"
+        >
+          {/* klik form tidak menutup popup */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14 [&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
+          >
+            <AddCategory
+              categories={categories}
+              onTambah={async (itemBaru) => {
+                await tambahPengeluaran(itemBaru);
+                setBukaForm(false); // tutup popup
+              }}
+            />
+          </div>
+        </div>
+      )}
+
       <main className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col px-4 pt-4 md:block md:py-3 lg:flex">
         {/* Ringkasan */}
-        <SummaryPanel pengeluaran={pengeluaran} />
+        <SummaryPanel pengeluaran={pengeluaran} categories={categories} />
 
         <div className="mt-7 flex min-h-0 flex-1 flex-col md:grid md:items-start md:gap-5 lg:min-h-0 lg:flex-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)]">
           {/* Table*/}
@@ -161,7 +190,7 @@ function Home() {
                 <div className="min-w-0 flex-1">
                   <SearchInput />
                 </div>
-                <CategoryFilter />
+                <CategoryFilter categories={categories} />
               </div>
             </div>
 
@@ -186,7 +215,11 @@ function Home() {
 
           {/* Kanan:kategori (desktop) */}
           <div className="hidden min-w-0 md:block">
-            <CategoryBreakdown pengeluaran={pengeluaran} />
+            <CategoryBreakdown
+              pengeluaran={pengeluaran}
+              categories={categories}
+              tambahKategory={tambahKategory}
+            />
           </div>
         </div>
       </main>
