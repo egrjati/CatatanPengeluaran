@@ -19,9 +19,11 @@ export async function tambahCatatan(data) {
   return isiBalasan;
 }
 
-export async function hapusCatatan(id) {
+export async function editCatatan(id, data) {
   const respon = await fetch(`${BASE_URL}/pengeluaran/${id}`, {
-    method: "DELETE",
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
   });
   const isiBalasan = await respon.json();
 
@@ -29,11 +31,9 @@ export async function hapusCatatan(id) {
   return isiBalasan;
 }
 
-export async function editCatatan(id, data) {
+export async function hapusCatatan(id) {
   const respon = await fetch(`${BASE_URL}/pengeluaran/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    method: "DELETE",
   });
   const isiBalasan = await respon.json();
 
