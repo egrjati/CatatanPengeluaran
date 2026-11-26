@@ -5,15 +5,21 @@ import {
   hapusCatatan,
   editCatatan,
 } from "@/api/catatan.js";
-import { tarikSemuaCategory, tambahCategory } from "@/api/category.js";
+import {
+  getAllCategory,
+  addCategory,
+  deleteCategory,
+  editCategory,
+} from "@/api/category.js";
 import Header from "@/components/layouts/Header";
 import ExpenseList from "@/components/expense/list/ExpenseList";
 import CategoryBreakdown from "@/components/expense/summary/CategoryBreakdown";
 import SearchInput from "@/components/ui/SearchInput";
 import CategoryFilter from "@/components/expense/filter/CategoryFilter";
 import AddExpenseForm from "@/components/expense/form/AddExpenseForm";
-import AddCategory from "@/components/category/form/AddCategoryForm";
+import AddCategoryForm from "@/components/category/form/AddCategoryForm";
 import EditExpenseForm from "@/components/expense/form/EditExpenseForm";
+import ManageCategory from "@/components/category/ManageCategory";
 import SummaryPanel from "@/components/expense/summary/SummaryPanel";
 import { Plus } from "lucide-react";
 
@@ -25,6 +31,16 @@ function Home() {
   const [bukaForm, setBukaForm] = useState(false);
   const [bukaFormKategori, setBukaFormKategori] = useState(false);
   const [catatanTerpilih, setCatatanTerpilih] = useState(null);
+  const [bukaKelolaKategori, setBukaKelolaKategori] = useState(false);
+
+  // Kunci scroll saat popup buka
+  useEffect(() => {
+    if (!bukaForm && !bukaFormKategori && !bukaKelolaKategori) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = ""; // buka kunci
+    };
+  }, [bukaForm, bukaFormKategori, bukaKelolaKategori]);
 
   // CRUD Pengeluaran
   // Get
@@ -41,15 +57,6 @@ function Home() {
     }
     muatCatatan();
   }, []);
-
-  // Kunci scroll saat popup buka
-  useEffect(() => {
-    if (!bukaForm && !bukaFormKategori) return;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = ""; // buka kunci
-    };
-  }, [bukaForm, bukaFormKategori]);
 
   async function tambahPengeluaran(itemBaru) {
     const catatanBaru = await tambahCatatan(itemBaru);
@@ -79,7 +86,7 @@ function Home() {
   useEffect(() => {
     async function muatCategory() {
       try {
-        const dataCategory = await tarikSemuaCategory();
+        const dataCategory = await getAllCategory();
         setCategories(dataCategory);
         console.log(dataCategory);
       } catch (err) {
@@ -90,8 +97,27 @@ function Home() {
   }, []);
 
   async function tambahKategory(itemBaru) {
-    const kategori = await tambahCategory(itemBaru);
+    const kategori = await addCategory(itemBaru);
     setCategories((prev) => [kategori, ...prev]);
+  }
+
+  async function ubahCategory(id, isiBaru) {
+    const categoryDiEdit = await editCategory(id, isiBaru);
+
+    setCategories((prev) =>
+      prev.map((kategory) =>
+        kategory.id === categoryDiEdit.id ? categoryDiEdit : kategory,
+      ),
+    );
+  }
+
+  async function hapusCategory(id) {
+    try {
+      await deleteCategory(id);
+      setCategories((prev) => prev.filter((category) => category.id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
   return (
@@ -147,6 +173,28 @@ function Home() {
         </div>
       )}
 
+      {/* Popup form edit category  */}
+      {bukaKelolaKategori && (
+        <div
+          onClick={() => setBukaKelolaKategori(false)} // ⬅ tutup popup
+          className="fixed inset-0 z-50 flex animate-fade-masuk items-end justify-center bg-black/50 md:items-center md:overflow-y-auto md:p-4"
+        >
+          {/* Klik form tidak menutup popup */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14 [&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
+          >
+            {/* Edit category */}
+            <ManageCategory
+              categories={categories}
+              onSimpan={ubahCategory}
+              onHapus={hapusCategory}
+            />
+            {/* End edit category */}
+          </div>
+        </div>
+      )}
+
       {/* Popup tambah category */}
       {bukaFormKategori && (
         // Lapisan gelap
@@ -159,10 +207,9 @@ function Home() {
             onClick={(e) => e.stopPropagation()}
             className="max-h-[90dvh] w-full animate-sheet-naik overflow-y-auto pt-5 [&>form]:mt-0 [&>form]:rounded-b-none [&>form]:border-b-0 [&>form]:pb-14 [&>form]:shadow-none md:max-h-none md:max-w-md lg:max-w-lg md:animate-pop-masuk md:overflow-visible md:pt-0 md:[&>form]:mt-10 md:[&>form]:rounded-b-2xl md:[&>form]:border-b-2 md:[&>form]:pb-6 md:[&>form]:shadow-[6px_6px_0_#171717]"
           >
-            <AddCategory
-              categories={categories}
+            <AddCategoryForm
               onTambah={async (itemBaru) => {
-                await tambahCategory(itemBaru);
+                await tambahKategory(itemBaru);
                 setBukaFormKategori(false); // tutup popup
               }}
             />
@@ -220,7 +267,7 @@ function Home() {
               onBukaForm={() => setBukaFormKategori(true)}
               pengeluaran={pengeluaran}
               categories={categories}
-              tambahKategory={tambahKategory}
+              onBukaKelola={() => setBukaKelolaKategori(true)}
             />
           </div>
         </div>

@@ -2,7 +2,7 @@ import { formatRupiah, formatTanggal } from "@/utils/format";
 import { Trash2, Pencil } from "lucide-react";
 import notebookLockup from "@/assets/icon/notebook-mark.svg";
 
-function ExpenseList({ datas, onHapus, onEdit, error, loading }) {
+function ExpenseList({ categories, datas, onHapus, onEdit, error, loading }) {
   if (loading)
     return (
       <div className="flex items-center justify-center px-6 py-24">
@@ -77,51 +77,56 @@ function ExpenseList({ datas, onHapus, onEdit, error, loading }) {
             </div>
 
             {/* map dalam */}
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between gap-4 py-3"
-              >
-                {/* Kiri: nama + badge kategori */}
-                <div className="min-w-0">
-                  <p className="wrap-break-word text-sm font-bold">
-                    {item.nama}
-                  </p>
-                  <span
-                    style={{ backgroundColor: item.kategori.warna }}
-                    className="mt-1 inline-block rounded-full border-2 border-neutral-900 bg-white px-2 py-0.5 font-angka text-[10px] font-bold uppercase tracking-wider"
-                  >
-                    {item.kategori.namaCategory}
-                  </span>
-                </div>
-
-                {/* Kanan: harga + hapus */}
-                <div className="flex shrink-0 items-center gap-3">
-                  <p className="font-angka text-sm font-bold">
-                    {formatRupiah.format(item.harga)}
-                  </p>
-                  {/* Button */}
-                  <div className="flex gap-1 items-center">
-                    <button
-                      type="button"
-                      onClick={() => onEdit(item)}
-                      className="cursor-pointer rounded-md p-1 text-neutral-500 transition hover:bg-[#7B9CFF]/10 hover:text-[#5f87ff]"
+            {items.map((item) => {
+              const kategori = categories.find(
+                (key) => key.id === item.kategoriId,
+              );
+              return (
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between gap-4 py-3"
+                >
+                  {/* Kiri: nama + badge kategori */}
+                  <div className="min-w-0">
+                    <p className="wrap-break-word text-sm font-bold">
+                      {item.nama}
+                    </p>
+                    <span
+                      style={{ backgroundColor: kategori?.warna }}
+                      className="mt-1 inline-block rounded-full border-2 border-neutral-900 bg-white px-2 py-0.5 font-angka text-[10px] font-bold uppercase tracking-wider"
                     >
-                      <Pencil className="h-4 w-4 " />
-                    </button>
+                      {kategori?.namaCategory}
+                    </span>
+                  </div>
 
-                    <button
-                      type="button"
-                      onClick={() => onHapus(item.id)}
-                      aria-label={`Hapus ${item.nama}`}
-                      className="cursor-pointer rounded-md p-1 text-neutral-500 transition hover:bg-[#D62828]/10 hover:text-[#D62828]"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
+                  {/* Kanan: harga + hapus */}
+                  <div className="flex shrink-0 items-center gap-3">
+                    <p className="font-angka text-sm font-bold">
+                      {formatRupiah.format(item.harga)}
+                    </p>
+                    {/* Button */}
+                    <div className="flex gap-1 items-center">
+                      <button
+                        type="button"
+                        onClick={() => onEdit(item)}
+                        className="cursor-pointer rounded-md p-1 text-neutral-500 transition hover:bg-[#7B9CFF]/10 hover:text-[#5f87ff]"
+                      >
+                        <Pencil className="h-4 w-4 " />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => onHapus(item.id)}
+                        aria-label={`Hapus ${item.nama}`}
+                        className="cursor-pointer rounded-md p-1 text-neutral-500 transition hover:bg-[#D62828]/10 hover:text-[#D62828]"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </section>
         );
       })}

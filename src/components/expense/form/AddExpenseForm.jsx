@@ -90,21 +90,21 @@ function AddExpenseForm({ onTambah, categories }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#D62828] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
+      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#FFE14D] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
     >
       {/* stiker miring di pojok */}
-      <span className="absolute -top-4 left-5 -rotate-3 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-neutral-900 shadow-[2px_2px_0_#171717]">
+      <span className="absolute -top-4 left-5 -rotate-3 rounded-full border-2 border-neutral-900 bg-[#D62828] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[#F2ECE4] shadow-[2px_2px_0_#171717]">
         ✍️ Beli apa aja hari ini?
       </span>
 
       {/* Nama form */}
-      <h2 className="text-2xl lg:text-3xl text-center font-extrabold text-[#F2ECE4]">
+      <h2 className="text-2xl lg:text-3xl text-center font-extrabold text-neutral-900">
         Catat Pengeluaran
       </h2>
 
       {/* Input Nama */}
       <label className="mt-4 block">
-        <span className="text-sm font-bold uppercase tracking-wider text-[#F2ECE4]">
+        <span className="text-sm font-bold uppercase tracking-wider text-neutral-900">
           Beli apa?
         </span>
         <input
@@ -115,13 +115,13 @@ function AddExpenseForm({ onTambah, categories }) {
             setNama(e.target.value);
             setError((prev) => ({ ...prev, nama: "" }));
           }}
-          className={`mt-1.5 w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:font-normal placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.nama ? "ring-4 ring-[#FFE14D]" : ""}`}
+          className={`mt-1.5 w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:font-normal placeholder:text-neutral-400 focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717] ${error.nama ? "ring-4 ring-[#D62828]" : ""}`}
         />
       </label>
 
       {/* Harga */}
       <label className="mt-3 block">
-        <span className="text-sm font-bold uppercase tracking-wider text-[#F2ECE4]">
+        <span className="text-sm font-bold uppercase tracking-wider text-neutral-900">
           Harga
         </span>
         <div className="relative mt-1.5 transition focus-within:-translate-y-0.5">
@@ -137,14 +137,14 @@ function AddExpenseForm({ onTambah, categories }) {
               setHarga(e.target.value.replace(/\D/g, ""));
               setError((prev) => ({ ...prev, harga: "" }));
             }}
-            className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-11 pr-4 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:text-neutral-400 focus:shadow-[5px_5px_0_#171717] ${error.harga ? "ring-4 ring-[#FFE14D]" : ""}`}
+            className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-11 pr-4 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition placeholder:text-neutral-400 focus:shadow-[5px_5px_0_#171717] ${error.harga ? "ring-4 ring-[#D62828]" : ""}`}
           />
         </div>
       </label>
 
       {/* Tanggal */}
       <div className="mt-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
+        <span className="text-xs font-bold uppercase tracking-wider text-neutral-900">
           Kapan?
         </span>
         <div className="mt-1.5 flex flex-wrap items-center gap-2">
@@ -190,7 +190,7 @@ function AddExpenseForm({ onTambah, categories }) {
                 setTanggal(e.target.value);
                 setError((prev) => ({ ...prev, tanggal: "" }));
               }}
-              className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-4 pr-10 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:shadow-[5px_5px_0_#171717] [&::-webkit-calendar-picker-indicator]:opacity-0 ${error.tanggal ? "ring-4 ring-[#FFE14D]" : ""}`}
+              className={`w-full rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] py-3 pl-4 pr-10 font-angka text-sm font-bold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:shadow-[5px_5px_0_#171717] [&::-webkit-calendar-picker-indicator]:opacity-0 ${error.tanggal ? "ring-4 ring-[#D62828]" : ""}`}
             />
             <CalendarFold className="pointer-events-none absolute right-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-neutral-900" />
           </div>
@@ -199,7 +199,7 @@ function AddExpenseForm({ onTambah, categories }) {
 
       {/* Kategori */}
       <label className="mt-5 block">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#F2ECE4]">
+        <span className="text-xs font-bold uppercase tracking-wider text-neutral-900">
           Kategori
         </span>
         <select
@@ -223,7 +223,7 @@ function AddExpenseForm({ onTambah, categories }) {
       {/* Button tambah */}
       <button
         type="submit"
-        className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-neutral-900 bg-[#FFE14D] py-3.5 text-base font-extrabold uppercase tracking-wide text-neutral-900 shadow-[4px_4px_0_#171717] transition hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-none"
+        className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-neutral-900 bg-[#D62828] py-3.5 text-base font-extrabold uppercase tracking-wide text-[#F2ECE4] shadow-[4px_4px_0_#171717] transition hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-none"
       >
         Gas, Catat!
         <ArrowUpRight className="h-5 w-5" strokeWidth={3} />
@@ -233,7 +233,7 @@ function AddExpenseForm({ onTambah, categories }) {
       {pesanError && (
         <p
           role="alert"
-          className="absolute bottom-3 left-1/2 z-10 flex w-max max-w-[calc(100%-3rem)] -translate-x-1/2 rotate-1 animate-pop-masuk items-center gap-2 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-4 py-1.5 text-xs font-bold text-neutral-900 shadow-[2px_2px_0_#171717] md:-bottom-4"
+          className="absolute bottom-3 left-1/2 z-10 flex w-max max-w-[calc(100%-3rem)] -translate-x-1/2 rotate-1 animate-pop-masuk items-center gap-2 rounded-full border-2 border-neutral-900 bg-[#D62828] px-4 py-1.5 text-xs font-bold text-[#F2ECE4] shadow-[2px_2px_0_#171717] md:-bottom-4"
         >
           <TriangleAlert className="h-4 w-4 shrink-0" />
           {pesanError}

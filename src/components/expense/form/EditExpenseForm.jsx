@@ -5,7 +5,7 @@ import { ArrowUpRight, CalendarFold, TriangleAlert } from "lucide-react";
 function EditExpenseForm({ catatan, onSimpan, categories }) {
   const [nama, setNama] = useState(catatan.nama);
   const [harga, setHarga] = useState(catatan.harga);
-  const [kategoriId, setKategoriId] = useState("");
+  const [kategoriId, setKategoriId] = useState(catatan.kategoriId);
   const [tanggal, setTanggal] = useState(catatan.tanggal);
   const [error, setError] = useState({});
 
@@ -83,7 +83,7 @@ function EditExpenseForm({ catatan, onSimpan, categories }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#3B6FCC] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
+      className="relative mt-10 rounded-2xl border-2 border-neutral-900 bg-[#D62828] px-6 pb-6 pt-8 shadow-[6px_6px_0_#171717]"
     >
       {/* stiker miring di pojok */}
       <span className="absolute -top-4 left-5 -rotate-3 rounded-full border-2 border-neutral-900 bg-[#FFE14D] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-neutral-900 shadow-[2px_2px_0_#171717]">
@@ -199,7 +199,7 @@ function EditExpenseForm({ catatan, onSimpan, categories }) {
           value={kategoriId}
           onChange={(e) => {
             setKategoriId(e.target.value);
-            setError((prev) => ({ ...prev, kategoriId: " " }));
+            setError((prev) => ({ ...prev, kategoriId: "" }));
           }}
           className="mt-1.5 w-full cursor-pointer rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717]"
         >
