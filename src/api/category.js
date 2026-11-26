@@ -7,3 +7,16 @@ export async function tarikSemuaCategory() {
   const dataCategory = await respon.json();
   return dataCategory;
 }
+
+// Post data category
+export async function tambahCategory(data) {
+  const respon = await fetch(`${BASE_URL}/categories`, {
+    method: "POST",
+    // label kalau ini isinya json
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  const isiBalasan = await respon.json();
+  if (!respon.ok) throw new Error(isiBalasan.pesan);
+  return isiBalasan;
+}
