@@ -20,7 +20,7 @@ function Header({ onBukaForm }) {
 
         {/* Kanan */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          {/* Pilih bulan (mobile) */}
+          {/* Pilih Bulan */}
           <button
             type="button"
             className="flex items-center gap-1.5 rounded-full border-2 border-neutral-900 bg-white px-3.5 py-1.5 font-angka text-xs font-bold tracking-wider text-neutral-900 md:hidden"
@@ -29,7 +29,7 @@ function Header({ onBukaForm }) {
             <ChevronDown className="h-4 w-4" strokeWidth={2.5} />
           </button>
 
-          {/* Pilih bulan (desktop) */}
+          {/* Pilih Bulan */}
           <div className="hidden items-center gap-1 rounded-full border-2 border-neutral-900 bg-white px-1 py-1 shadow-[2px_2px_0_#171717] md:flex">
             <button
               type="button"
