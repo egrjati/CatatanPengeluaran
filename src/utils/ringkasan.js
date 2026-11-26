@@ -77,7 +77,7 @@ export function hitungPerKategori(pengeluaran, categories) {
 
     return {
       id: kategori.id,
-      nama: kategori.nama,
+      nama: kategori.namaCategory,
       warna: kategori.warna,
       total,
       persen,
