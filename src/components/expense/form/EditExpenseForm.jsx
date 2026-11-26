@@ -5,7 +5,7 @@ import { ArrowUpRight, CalendarFold, TriangleAlert } from "lucide-react";
 function EditExpenseForm({ catatan, onSimpan, categories }) {
   const [nama, setNama] = useState(catatan.nama);
   const [harga, setHarga] = useState(catatan.harga);
-  const [kategoriId, setKategoriId] = useState("");
+  const [kategoriId, setKategoriId] = useState(catatan.kategoriId);
   const [tanggal, setTanggal] = useState(catatan.tanggal);
   const [error, setError] = useState({});
 
@@ -199,7 +199,7 @@ function EditExpenseForm({ catatan, onSimpan, categories }) {
           value={kategoriId}
           onChange={(e) => {
             setKategoriId(e.target.value);
-            setError((prev) => ({ ...prev, kategoriId: " " }));
+            setError((prev) => ({ ...prev, kategoriId: "" }));
           }}
           className="mt-1.5 w-full cursor-pointer rounded-xl border-2 border-neutral-900 bg-[#F2ECE4] px-4 py-3 text-sm font-semibold text-neutral-900 shadow-[3px_3px_0_#171717] outline-none transition focus:-translate-y-0.5 focus:shadow-[5px_5px_0_#171717]"
         >

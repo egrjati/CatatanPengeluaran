@@ -2,7 +2,12 @@ import { formatRupiah } from "@/utils/format";
 import { hitungPerKategori } from "@/utils/ringkasan";
 import { Plus } from "lucide-react";
 
-function CategoryBreakdown({ pengeluaran, categories, onBukaForm }) {
+function CategoryBreakdown({
+  pengeluaran,
+  categories,
+  onBukaForm,
+  onBukaKelola,
+}) {
   const daftarTotal = hitungPerKategori(pengeluaran, categories);
   console.log(daftarTotal);
 
@@ -68,6 +73,7 @@ function CategoryBreakdown({ pengeluaran, categories, onBukaForm }) {
       {/* Edit */}
       <button
         type="button"
+        onClick={onBukaKelola}
         aria-label="Edit kategori"
         className="absolute top-14 right-0 translate-x-full cursor-pointer rounded-r-md border-2 border-l-0 border-neutral-900 bg-[#FFE14D] px-0.5 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-neutral-900 shadow-[2px_2px_0_#171717] transition hover:-translate-y-0.5 active:shadow-none"
       >
